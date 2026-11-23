@@ -1,0 +1,27 @@
+---
+import Beam from './Beam.astro';
+import Smoke from './Smoke.astro';
+import type { Issue } from '../lib/issue-schema';
+import type { Lang } from '../i18n/lang';
+import { t } from '../i18n/ui';
+
+interface Props { number: Issue['number']; shift: number; lang: Lang; tag?: string }
+const { number, shift, lang, tag = number.label ?? t(lang, 'issue.numberOfWeek') } = Astro.props;
+const ul = lang === 'en' ? undefined : lang;
+---
+<Beam shift={shift} class="number-card">
+  <Smoke as="span" class="tag label" lang={number.label ? undefined : ul}>{tag}</Smoke>
+  <Smoke class="box">
+    <strong>{number.value}</strong>
+    <p class="st">{number.text}</p>
+    <p class="src"><span lang={ul}>{t(lang, 'issue.source')}</span> <a href={number.source.url}>{number.source.name}</a></p>
+  </Smoke>
+</Beam>
+
+<style is:global>
+  .number-card { min-height: 340px; min-width: 0; }
+  .number-card > .bc { height: 100%; min-height: inherit; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; gap: 24px; }
+  .number-card .tag { align-self: flex-start; padding: 6px 12px; }
+  .number-card .box { padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .number-card strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(56px, 8vw, 88px); line-height: .95; letter-spacing: -.045em; color: var(--smoke-ink); overflow-wrap: anywhere; }
+</style>

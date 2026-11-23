@@ -1,0 +1,20 @@
+---
+import type { Issue } from '../lib/issue-schema';
+interface Props { items: Issue['agenda'] }
+const { items } = Astro.props;
+---
+<ul class="agenda">
+  {items.map((it) => (
+    <li class="row"><span class="d">{it.date}</span><span class="w"><a href={it.url}>{it.title}</a></span><span class="x">{it.text}</span></li>
+  ))}
+</ul>
+
+<style>
+  .agenda { background: var(--surface-raised); border-radius: var(--radius-glass); padding: 4px 24px; list-style: none; }
+  .row { display: grid; grid-template-columns: 110px minmax(0, 1fr) minmax(0, 1fr); gap: 18px; padding: 14px 0; border-top: 1px solid var(--hairline); font-size: 15px; }
+  .row:first-child { border-top: 0; }
+  .d { font-family: var(--font-mono); font-size: 13px; color: var(--label-fire); font-weight: 500; padding-top: 2px; }
+  .w a { font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .x { color: var(--ink-soft); }
+  @media (max-width: 640px) { .row { grid-template-columns: 1fr; gap: 4px; } .agenda { padding: 4px 16px; } }
+</style>

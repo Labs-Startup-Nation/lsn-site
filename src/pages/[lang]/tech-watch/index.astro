@@ -1,11 +1,89 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../../i18n/lang';
+import PageHero from '../../../components/PageHero.astro';
+import SectionTitle from '../../../components/SectionTitle.astro';
+import Button from '../../../components/Button.astro';
+import Label from '../../../components/Label.astro';
+import { getIssues, formatIssueDate } from '../../../lib/issues';
+import { langStaticPaths, localePath, type Lang } from '../../../i18n/lang';
 import { t } from '../../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const issues = await getIssues();
+const latest = issues[0];
+const formats = [
+  ['tw.fmtWebLabel', 'tw.fmtWebTitle', 'tw.fmtWebText'],
+  ['tw.fmtPdfLabel', 'tw.fmtPdfTitle', 'tw.fmtPdfText'],
+  ['tw.fmtPostLabel', 'tw.fmtPostTitle', 'tw.fmtPostText'],
+] as const;
 ---
-<Base lang={lang} title={t(lang, 'nav.techWatch')}>
-  <h1>{t(lang, 'nav.techWatch')}</h1>
+<Base lang={lang} title={t(lang, 'nav.techWatch')} description={t(lang, 'tw.heroText')}>
+  <PageHero label={t(lang, 'tw.heroLabel')} title={t(lang, 'tw.heroTitle')} em={t(lang, 'tw.heroTitleEm')} text={t(lang, 'tw.heroText')} shift={-0.04} />
+
+  <section class="block" id="latest">
+    {latest ? (
+      <>
+        <div class="issue-head">
+          <SectionTitle>{t(lang, 'tw.latest', { date: formatIssueDate(latest.data.date, 'long', lang) })}</SectionTitle>
+          <Button href={localePath(lang, `/tech-watch/${latest.id}`)} variant="ink">{t(lang, 'tw.readFull')}</Button>
+        </div>
+        <p class="intro" lang="en">{latest.data.oneLine}</p>
+      </>
+    ) : (
+      <p class="intro">{t(lang, 'tw.empty')}</p>
+    )}
+    <ul class="rubrics" aria-label={t(lang, 'tw.rubricsLabel')}>
+      {t(lang, 'tw.rubrics').split('|').map((r) => <li>{r}</li>)}
+    </ul>
+  </section>
+
+  {issues.length > 0 && (
+    <section class="block" id="archive">
+      <SectionTitle accent="tangerine">{t(lang, 'tw.archive')}</SectionTitle>
+      <ul class="archive">
+        {issues.map(({ id, data }) => (
+          <li class="arow">
+            <span class="d">{formatIssueDate(data.date, 'short', lang)} · {t(lang, 'tw.archiveWeek', { week: data.week })}</span>
+            <div lang="en">
+              <h3><a href={localePath(lang, `/tech-watch/${id}`)}>{data.title}</a></h3>
+              <p>{data.oneLine}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="block">
+    <SectionTitle accent="sky">{t(lang, 'tw.formats')}</SectionTitle>
+    <div class="formats">
+      {formats.map(([label, title, text]) => (
+        <div class="fmt"><Label>{t(lang, label)}</Label><h3>{t(lang, title)}</h3><p>{t(lang, text)}</p></div>
+      ))}
+    </div>
+  </section>
 </Base>
+
+<style>
+  .block { padding-top: 72px; }
+  .issue-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; margin-bottom: 16px; }
+  .issue-head :global(.sec) { margin: 0; }
+  .intro { max-width: 62ch; color: var(--ink-soft); font-size: 17px; margin-bottom: 24px; }
+  .rubrics { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
+  .rubrics li { font-family: var(--font-mono); font-size: 12px; padding: 5px 10px; border-radius: var(--radius-pill); background: var(--surface-raised); color: var(--ink-soft); }
+  .archive { list-style: none; padding: 0; border-top: 1px solid var(--hairline); }
+  .arow { position: relative; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--hairline); }
+  .arow .d { font-family: var(--font-mono); font-size: 13px; color: var(--label-fire); font-weight: 500; }
+  .arow h3 { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -.015em; line-height: 1.25; overflow-wrap: anywhere; }
+  .arow h3 a { text-decoration: none; }
+  .arow h3 a::after { content: ''; position: absolute; inset: 0; }
+  .arow:hover h3 a { text-decoration: underline; text-underline-offset: 3px; }
+  .arow p { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; }
+  .formats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .fmt { border: 1px solid var(--hairline); border-radius: var(--radius-glass); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .fmt h3 { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -.015em; }
+  .fmt p { color: var(--ink-soft); font-size: 14.5px; }
+  @media (max-width: 900px) { .formats { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .issue-head, .arow { grid-template-columns: 1fr; gap: 6px; } }
+</style>

@@ -1,8 +1,8 @@
 ---
-interface Props { tone?: 'fire' | 'sun' | 'ink'; as?: string; class?: string }
-const { tone, as: Tag = 'p', class: className } = Astro.props;
+interface Props { tone?: 'fire' | 'sun' | 'ink'; as?: string; class?: string; [key: string]: unknown }
+const { tone, as: Tag = 'p', class: className, ...rest } = Astro.props;
 ---
-<Tag class:list={['label', tone && `label--${tone}`, className]}><slot /></Tag>
+<Tag class:list={['label', tone && `label--${tone}`, className]} {...rest}><slot /></Tag>
 
 <style is:global>
   .label { font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; line-height: 1.3; letter-spacing: .08em; text-transform: uppercase; color: var(--label-fire); }

@@ -1,0 +1,44 @@
+---
+import Beam from './Beam.astro';
+import Smoke from './Smoke.astro';
+import Label from './Label.astro';
+import Button from './Button.astro';
+import type { Article } from '../lib/issue-schema';
+import type { Lang } from '../i18n/lang';
+import { t } from '../i18n/ui';
+
+interface Props { article: Article; shift: number; lang: Lang }
+const { article, shift, lang } = Astro.props;
+const ul = lang === 'en' ? undefined : lang; // UI text inside English content
+---
+<Beam as="article" shift={shift} class="card">
+  <Smoke class="box">
+    <Label>{article.label}</Label>
+    <h3>{article.title}</h3>
+    <p class="st">{article.text}</p>
+    <p class="st why"><b lang={ul}>{t(lang, 'issue.why')}</b>{article.why}</p>
+    <div class="foot">
+      <div class="fig"><strong>{article.figure}</strong><span>{article.figureLabel}</span></div>
+      <Button href={article.url} variant="sun" lang={ul}>{t(lang, 'issue.readStory')}</Button>
+    </div>
+    <p class="src"><span lang={ul}>{t(lang, article.sources.length > 1 ? 'issue.sources' : 'issue.source')}</span>{' '}
+      {article.sources.map((s, i) => <>{i > 0 && ' · '}<a href={s.url}>{s.name}</a></>)}
+    </p>
+  </Smoke>
+</Beam>
+
+<style is:global>
+  .card { break-inside: avoid; min-width: 0; }
+  .card > .bc { padding: 20px; }
+  .card .box { margin-top: 110px; padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .card h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.6vw, 24px); line-height: 1.15; letter-spacing: -.02em; overflow-wrap: anywhere; }
+  .card .st { font-size: 15.5px; line-height: 1.55; overflow-wrap: anywhere; }
+  .card .why b { color: var(--sun); font-weight: 600; }
+  .card .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 14px; margin-top: 2px; border-top: 1px solid var(--smoke-line); }
+  .fig { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+  .fig strong { font-family: var(--font-display); font-weight: 600; font-size: 28px; line-height: 1; letter-spacing: -.03em; color: var(--smoke-ink); overflow-wrap: anywhere; }
+  .fig span { font-size: 13px; color: var(--smoke-ink-soft); }
+  .src { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--smoke-ink-soft); overflow-wrap: anywhere; }
+  .src a { color: var(--smoke-ink); }
+  @media (max-width: 640px) { .card > .bc { padding: 12px; } .card .box { padding: 20px; margin-top: 90px; } }
+</style>

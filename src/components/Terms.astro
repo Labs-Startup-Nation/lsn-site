@@ -1,0 +1,17 @@
+---
+import type { Issue } from '../lib/issue-schema';
+interface Props { terms: Issue['terms'] }
+const { terms } = Astro.props;
+---
+<dl class="terms">
+  {terms.map((it) => <div class="term"><dt>{it.term}</dt><dd>{it.definition}</dd></div>)}
+</dl>
+
+<style>
+  .terms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
+  .term { background: var(--surface-raised); border-radius: var(--radius-glass); padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; break-inside: avoid; min-width: 0; }
+  dt { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -.015em; color: var(--label-fire); overflow-wrap: anywhere; }
+  dd { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-soft); }
+  @media (max-width: 860px) { .terms { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .terms { grid-template-columns: 1fr; } }
+</style>

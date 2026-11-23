@@ -1,0 +1,19 @@
+---
+import Base from '../../../layouts/Base.astro';
+import IssueView from '../../../components/IssueView.astro';
+import { getIssues, formatIssueDate } from '../../../lib/issues';
+import { LANGS, type Lang } from '../../../i18n/lang';
+import { t } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const issues = await getIssues();
+  return LANGS.flatMap((lang) => issues.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props;
+const issue = entry.data;
+---
+<Base lang={lang} title={`${t(lang, 'issue.title')} · ${formatIssueDate(issue.date, 'long', lang)}`} description={issue.oneLine}>
+  <IssueView issue={issue} lang={lang} />
+</Base>

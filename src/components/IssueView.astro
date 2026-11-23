@@ -1,0 +1,128 @@
+---
+import Beam from './Beam.astro';
+import Smoke from './Smoke.astro';
+import Label from './Label.astro';
+import Logo from './Logo.astro';
+import SectionTitle from './SectionTitle.astro';
+import StoryCard from './StoryCard.astro';
+import ArticleCard from './ArticleCard.astro';
+import NumberCard from './NumberCard.astro';
+import ConceptCard from './ConceptCard.astro';
+import Agenda from './Agenda.astro';
+import Terms from './Terms.astro';
+import Button from './Button.astro';
+import type { Issue } from '../lib/issue-schema';
+import { formatIssueDate } from '../lib/issue-utils';
+import { localePath, type Lang } from '../i18n/lang';
+import { t } from '../i18n/ui';
+
+interface Props { issue: Issue; lang: Lang }
+const { issue, lang } = Astro.props;
+const ul = lang === 'en' ? undefined : lang; // UI text inside English content
+const TOP_SHIFTS = [-0.06, 0.04, 0.14];
+const CARD_SHIFTS = [-0.12, -0.04, -0.15, -0.08, -0.1, -0.02, -0.14, -0.06];
+const sections = issue.sections.filter((s) => s.articles.length > 0 || s.note);
+let card = 0;
+const nextShift = () => CARD_SHIFTS[card++ % CARD_SHIFTS.length];
+---
+{lang !== 'en' && <p class="notice">{t(lang, 'issue.inEnglish')}</p>}
+
+<Beam interactive class="issue-hero">
+  <Smoke class="bar">
+    <span class="brand"><Logo tone="cream" /></span>
+    <Label>{t(lang, 'issue.weekly')}</Label>
+  </Smoke>
+  <Smoke class="ttl">
+    <Label>{t(lang, 'issue.number', { week: issue.week })}</Label>
+    <h1>{t(lang, 'issue.title')}</h1>
+    <p class="sub">{t(lang, 'issue.weekOf', { date: formatIssueDate(issue.date, 'long', lang) })}</p>
+    {issue.period && <p class="meta" lang="en">{issue.period}</p>}
+  </Smoke>
+  <Smoke class="lead">
+    <Label>{t(lang, 'issue.oneLine')}</Label>
+    <p class="t" lang="en">{issue.oneLine}</p>
+  </Smoke>
+</Beam>
+
+<div data-issue-content lang="en">
+  <section class="issue-block">
+    <SectionTitle lang={ul}>{t(lang, 'issue.topStories')}</SectionTitle>
+    <div class="tops">
+      {issue.topStories.map((story, i) => <StoryCard story={story} index={i + 1} shift={TOP_SHIFTS[i % 3]} lang={lang} />)}
+    </div>
+  </section>
+
+  {sections.map((section) => (
+    <section class="issue-block issue-section" id={section.id}>
+      <SectionTitle accent={section.accent}>{section.title}</SectionTitle>
+      <div class="cards">
+        {section.articles.map((article) => <ArticleCard article={article} shift={nextShift()} lang={lang} />)}
+      </div>
+      {section.note && <p class="note">{section.note}</p>}
+    </section>
+  ))}
+
+  {issue.agenda.length > 0 && (
+    <section class="issue-block">
+      <SectionTitle accent="tangerine" lang={ul}>{t(lang, 'issue.comingUp')}</SectionTitle>
+      <Agenda items={issue.agenda} />
+    </section>
+  )}
+
+  <section class="issue-block duo">
+    <div>
+      <SectionTitle accent="sky" lang={ul}>{t(lang, 'issue.concept')}</SectionTitle>
+      <ConceptCard concept={issue.concept} lang={lang} />
+    </div>
+    <div>
+      <SectionTitle lang={ul}>{t(lang, 'issue.numberOfWeek')}</SectionTitle>
+      <NumberCard number={issue.number} shift={0.12} lang={lang} />
+    </div>
+  </section>
+
+  {issue.terms.length > 0 && (
+    <section class="issue-block">
+      <SectionTitle accent="tangerine" lang={ul}>{t(lang, 'issue.terms')}</SectionTitle>
+      <Terms terms={issue.terms} />
+    </section>
+  )}
+
+  <div class="issue-end btns" lang={ul}>
+    {issue.pdf && <Button href={issue.pdf} variant="ink" download>{t(lang, 'issue.pdf')}</Button>}
+    <Button href={localePath(lang, '/tech-watch')} variant="ghost">{t(lang, 'issue.allIssues')}</Button>
+  </div>
+</div>
+
+<style is:global>
+  .notice { margin-bottom: 12px; padding: 10px 14px; border-radius: var(--radius-glass); background: var(--sky-soft); color: var(--on-sky-soft); font-size: 15px; }
+  .issue-hero > .bc { display: flex; flex-direction: column; gap: 56px; padding: 20px 24px 28px; }
+  .issue-hero .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 16px; }
+  .issue-hero .brand { height: 26px; display: inline-flex; }
+  .issue-hero .ttl { align-self: flex-start; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px; max-width: 100%; }
+  .issue-hero h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 8vw, 80px); line-height: 1; letter-spacing: -.035em; color: var(--smoke-ink); overflow-wrap: anywhere; }
+  .issue-hero .sub { font-family: var(--font-display); font-weight: 500; font-size: clamp(18px, 2.6vw, 26px); letter-spacing: -.02em; line-height: 1.15; }
+  .issue-hero .meta { font-family: var(--font-mono); font-size: 12.5px; color: var(--smoke-ink-soft); }
+  .issue-hero .lead { padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; max-width: 780px; box-shadow: var(--shadow-glass); }
+  .issue-hero .lead .t { font-size: clamp(17px, 2vw, 20px); line-height: 1.5; }
+  .issue-block { padding-top: 64px; min-width: 0; }
+  .tops { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .cards { display: flex; flex-direction: column; gap: 24px; }
+  .note { margin-top: 16px; padding: 12px 16px; border-radius: var(--radius-glass); background: var(--surface-raised); color: var(--ink-soft); font-size: 15px; }
+  .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+  .duo > div { min-width: 0; }
+  .duo .number-card { aspect-ratio: 1 / 1; min-height: 0; }
+  .issue-end { padding-top: 48px; }
+  @media (max-width: 860px) { .tops { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) {
+    .duo { grid-template-columns: 1fr; }
+    .issue-hero > .bc { padding: 14px 14px 18px; gap: 40px; }
+    .issue-hero .ttl, .issue-hero .lead { padding: 20px; }
+    .duo .number-card { aspect-ratio: auto; min-height: 340px; }
+  }
+  @page { size: A4; margin: 12mm; }
+  @media print {
+    .top, .foot, .notice, .issue-end, .skip { display: none !important; }
+    .issue-block { padding-top: 8mm; }
+    .sec { break-after: avoid; }
+  }
+</style>

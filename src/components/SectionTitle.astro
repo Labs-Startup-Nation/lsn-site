@@ -1,9 +1,9 @@
 ---
-interface Props { accent?: 'ember' | 'tangerine' | 'sky' | 'salmon'; level?: 2 | 3; id?: string; class?: string }
-const { accent = 'ember', level = 2, id, class: className } = Astro.props;
+interface Props { accent?: 'ember' | 'tangerine' | 'sky' | 'salmon'; level?: 2 | 3; id?: string; class?: string; lang?: string }
+const { accent = 'ember', level = 2, id, class: className, lang } = Astro.props;
 const H = `h${level}` as 'h2' | 'h3';
 ---
-<div class:list={['sec', className]} style={`--d: var(--${accent})`}>
+<div class:list={['sec', className]} style={`--d: var(--${accent})`} lang={lang}>
   <i aria-hidden="true"></i>
   <H id={id}><slot /></H>
 </div>

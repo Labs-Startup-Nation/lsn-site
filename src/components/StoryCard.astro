@@ -1,0 +1,34 @@
+---
+import Beam from './Beam.astro';
+import Smoke from './Smoke.astro';
+import Label from './Label.astro';
+import Button from './Button.astro';
+import type { Issue } from '../lib/issue-schema';
+import type { Lang } from '../i18n/lang';
+import { t } from '../i18n/ui';
+
+interface Props { story: Issue['topStories'][number]; index?: number; shift: number; lang: Lang; headingLevel?: 2 | 3 }
+const { story, index, shift, lang, headingLevel = 3 } = Astro.props;
+const H = `h${headingLevel}` as 'h2' | 'h3';
+const ul = lang === 'en' ? undefined : lang; // UI text inside English content
+---
+<Beam as="article" shift={shift} class="top-story">
+  {index !== undefined && <Smoke as="span" class="num">{index}</Smoke>}
+  <Smoke class="box">
+    <Label>{story.label}</Label>
+    <H>{story.title}</H>
+    <p class="st">{story.text}</p>
+    <Button href={story.url} variant="sun" lang={ul}>{t(lang, 'issue.readStory')}</Button>
+  </Smoke>
+</Beam>
+
+<style is:global>
+  .top-story { display: flex; min-width: 0; break-inside: avoid; }
+  .top-story > .bc { display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; width: 100%; }
+  .top-story .num { align-self: flex-start; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; margin-bottom: auto; }
+  .top-story .box { margin-top: 96px; padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .top-story h2, .top-story h3 { font-family: var(--font-display); font-weight: 600; font-size: 18px; line-height: 1.18; letter-spacing: -.02em; overflow-wrap: anywhere; }
+  .top-story .st { font-size: 14.5px; line-height: 1.5; overflow-wrap: anywhere; }
+  .top-story .btn { margin-top: auto; align-self: stretch; }
+  @media (max-width: 860px) { .top-story .box { margin-top: 150px; } }
+</style>

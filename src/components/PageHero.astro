@@ -1,0 +1,27 @@
+---
+import Beam from './Beam.astro';
+import Smoke from './Smoke.astro';
+import Label from './Label.astro';
+
+interface Props { label: string; title: string; em: string; text: string; small?: boolean; shift?: number }
+const { label, title, em, text, small = true, shift = 0 } = Astro.props;
+---
+<Beam interactive shift={shift} class:list={['page-hero', small && 'small']}>
+  <Smoke class="panel">
+    <Label>{label}</Label>
+    <h1>{title} <em>{em}</em></h1>
+    <p class="t st">{text}</p>
+    <slot />
+  </Smoke>
+</Beam>
+
+<style is:global>
+  .page-hero > .bc { display: flex; flex-direction: column; justify-content: flex-end; gap: 16px; padding: 20px; min-height: 420px; }
+  .page-hero.small > .bc { min-height: 300px; }
+  .page-hero .panel { padding: 28px; display: flex; flex-direction: column; gap: 14px; max-width: 720px; box-shadow: var(--shadow-glass); }
+  .page-hero h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(32px, 6vw, 64px); line-height: 1.04; letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .page-hero.small h1 { font-size: clamp(28px, 5vw, 50px); }
+  .page-hero h1 em { font-style: normal; color: var(--sun); }
+  .page-hero .t { font-size: clamp(16px, 1.8vw, 19px); line-height: 1.5; }
+  @media (max-width: 600px) { .page-hero > .bc { padding: 12px; min-height: 380px; } .page-hero .panel { padding: 20px; } }
+</style>
