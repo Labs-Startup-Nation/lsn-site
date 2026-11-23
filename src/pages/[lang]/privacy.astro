@@ -1,11 +1,27 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../i18n/lang';
-import { t } from '../../i18n/ui';
+import { CONTACT_EMAIL } from '../../data/site';
+import { legal } from '../../i18n/legal';
+import { langStaticPaths, localePath, type Lang } from '../../i18n/lang';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const L = legal[lang];
+const formHref = localePath(lang, '/propose');
+const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+const contact = CONTACT_EMAIL
+  ? L.contactEmail.replace('{email}', `<a href="mailto:${esc(CONTACT_EMAIL)}">${esc(CONTACT_EMAIL)}</a>`)
+  : L.contactNoEmail.replace('{form}', `<a href="${formHref}">${esc(L.formLink)}</a>`);
 ---
-<Base lang={lang} title={t(lang, 'footer.privacy')}>
-  <h1>{t(lang, 'footer.privacy')}</h1>
+<Base lang={lang} title={L.privacyTitle}>
+  <article class="legal">
+    <h1>{L.privacyTitle}</h1>
+    <p>{L.privacyIntro}</p>
+    {L.sections.map(([title, text]) => (
+      <>
+        <h2>{title}</h2>
+        <p set:html={esc(text).replace('{contact}', contact)} />
+      </>
+    ))}
+  </article>
 </Base>

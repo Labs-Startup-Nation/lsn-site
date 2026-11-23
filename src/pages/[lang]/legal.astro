@@ -1,11 +1,32 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../i18n/lang';
-import { t } from '../../i18n/ui';
+import { PUBLISHER, PUBLICATION_DIRECTOR, CONTACT_EMAIL } from '../../data/site';
+import { legal, HOST } from '../../i18n/legal';
+import { langStaticPaths, localePath, type Lang } from '../../i18n/lang';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const L = legal[lang];
 ---
-<Base lang={lang} title={t(lang, 'footer.legal')}>
-  <h1>{t(lang, 'footer.legal')}</h1>
+<Base lang={lang} title={L.legalTitle}>
+  <article class="legal">
+    <h1>{L.legalTitle}</h1>
+    <h2>{L.publisher}</h2>
+    <p>{PUBLISHER ?? L.publisherFallback}</p>
+    {PUBLICATION_DIRECTOR && (<><h2>{L.director}</h2><p>{PUBLICATION_DIRECTOR}</p></>)}
+    <h2>{L.host}</h2>
+    <p>{HOST}</p>
+    <h2>{L.contact}</h2>
+    <p>{CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : <a href={localePath(lang, '/propose')}>{L.contactForm}</a>}</p>
+    <h2>{L.content}</h2>
+    <p>{L.contentText}</p>
+  </article>
 </Base>
+
+<style is:global>
+  .legal { max-width: 68ch; padding-block: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .legal h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 5vw, 44px); letter-spacing: -.03em; line-height: 1.08; margin-bottom: 12px; }
+  .legal h2 { font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: -.015em; margin-top: 16px; }
+  .legal p { color: var(--ink-soft); font-size: 16.5px; }
+  .legal a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+</style>

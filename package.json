@@ -12,7 +12,8 @@
     "check": "astro check",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "test:all": "vitest run && playwright test"
+    "test:all": "vitest run && playwright test",
+    "check:launch": "node scripts/check-launch.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
