@@ -24,6 +24,7 @@ export function initBeams(root: ParentNode = document): () => void {
     }];
   });
   let phase = 0;
+  const animates = (it: Item) => it.interactive || innerWidth >= BEAM.animateAllFrom;
   const cleanups: (() => void)[] = [];
 
   const paint = (it: Item) => {
@@ -75,7 +76,7 @@ export function initBeams(root: ParentNode = document): () => void {
       if (now - last > BEAM.frameMs) {
         phase += BEAM.phaseStep;
         last = now;
-        items.forEach((it) => it.seen && it.el.offsetParent !== null && paint(it));
+        items.forEach((it) => it.seen && animates(it) && it.el.offsetParent !== null && paint(it));
       }
       raf = requestAnimationFrame(tick);
     };

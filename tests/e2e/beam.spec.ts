@@ -62,3 +62,19 @@ test('dev page is noindex and not in the sitemap', async ({ page }) => {
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   expect(readFileSync('dist/sitemap-0.xml', 'utf8')).not.toContain('/dev/');
 });
+
+test.describe('small screens', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+  test('only the hero beam keeps animating', async ({ page }) => {
+    await page.goto('/en/');
+    await page.waitForSelector('.beam[data-drawn]');
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    await page.waitForTimeout(300);
+    const card = page.locator('.home-tops .beam canvas').first();
+    await card.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+    const a = await card.evaluate((c: HTMLCanvasElement) => c.toDataURL());
+    await page.waitForTimeout(400);
+    expect(await card.evaluate((c: HTMLCanvasElement) => c.toDataURL())).toBe(a);
+  });
+});

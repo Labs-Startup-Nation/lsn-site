@@ -4,7 +4,12 @@
   "title": "A minimal issue used by the tests",
   "oneLine": "Only the required parts of an issue, to check that empty parts are hidden.",
   "topStories": [
-    { "label": "Test", "title": "One top story only", "text": "A short text.", "url": "https://example.org/story" }
+    {
+      "label": "Test",
+      "title": "Supercalifragilisticexpialidocious-internationalisation-announcement-without-breaks",
+      "text": "A short text.",
+      "url": "https://example.org/story"
+    }
   ],
   "sections": [
     {
@@ -13,18 +18,28 @@
       "accent": "ember",
       "articles": [
         {
-          "label": "Market · Test",
-          "title": "One article",
-          "text": "Some text.",
+          "label": "Market \u00b7 Test",
+          "title": "An unusually long article title that keeps going to check that nothing overflows on a very small phone screen at all ",
+          "text": "See https://example.org/averyveryverylongpathsegmentwithoutanyspacesaveryveryverylongpathsegmentwithoutanyspacesaveryveryverylongpathsegmentwithoutanyspacesaveryveryverylongpathsegmentwithoutanyspaces for details.",
           "why": "Because it is a test.",
-          "figure": "1",
+          "figure": "$1,234,567.89B",
           "figureLabel": "Article",
           "url": "https://example.org/article",
-          "sources": [{ "name": "Example", "url": "https://example.org/source" }]
+          "sources": [
+            {
+              "name": "Example",
+              "url": "https://example.org/source"
+            }
+          ]
         }
       ]
     },
-    { "id": "jobs", "title": "Jobs & careers", "accent": "tangerine", "articles": [] }
+    {
+      "id": "jobs",
+      "title": "Jobs & careers",
+      "accent": "tangerine",
+      "articles": []
+    }
   ],
   "agenda": [],
   "concept": {
@@ -34,6 +49,13 @@
     "seenThisWeek": "In the tests.",
     "inPractice": "Nothing."
   },
-  "number": { "value": "1", "text": "One number.", "source": { "name": "Example", "url": "https://example.org/n" } },
+  "number": {
+    "value": "1",
+    "text": "One number.",
+    "source": {
+      "name": "Example",
+      "url": "https://example.org/n"
+    }
+  },
   "terms": []
 }

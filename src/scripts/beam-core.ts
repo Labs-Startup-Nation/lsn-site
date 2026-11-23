@@ -10,8 +10,11 @@ export const BEAM = {
   wave: 0.06,
   freq: 1.2,
   grid: 'rgba(255,251,240,.45)',
-  frameMs: 50,
-  phaseStep: 0.035,
+  /** 80 ms (mockup: 50 ms) to keep the main thread free on phones; phaseStep scaled so the speed is unchanged. */
+  frameMs: 80,
+  phaseStep: 0.056,
+  /** Under this width only interactive (hero) beams animate; the others are drawn once. */
+  animateAllFrom: 600,
   glideMax: 0.04,
   /** dy (in [-glideMax, glideMax]) is multiplied by this before being added to the wave phase, in radians. */
   glidePhase: 25,

@@ -35,6 +35,6 @@ describe('mouse glide', () => {
   });
 });
 
-test('beam parameters match the mockup', () => {
-  expect(BEAM).toMatchObject({ cell: 5, angle: 24, wave: 0.06, freq: 1.2, frameMs: 50, phaseStep: 0.035 });
+test('beam parameters match the mockup (80 ms frames, same speed)', () => {
+  expect(BEAM).toMatchObject({ cell: 5, angle: 24, wave: 0.06, freq: 1.2, frameMs: 80, phaseStep: 0.056 });
 });
