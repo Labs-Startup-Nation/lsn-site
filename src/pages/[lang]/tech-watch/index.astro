@@ -83,7 +83,7 @@ const formats = [
   .formats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .fmt { border: 1px solid var(--hairline); border-radius: var(--radius-glass); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
   .fmt h3 { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -.015em; }
-  .fmt p { color: var(--ink-soft); font-size: 14.5px; }
+  .fmt p:not(.label) { color: var(--ink-soft); font-size: 14.5px; }
   @media (max-width: 900px) { .formats { grid-template-columns: 1fr; } }
   @media (max-width: 600px) { .issue-head, .arow { grid-template-columns: 1fr; gap: 6px; } }
 </style>

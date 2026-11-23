@@ -1,11 +1,94 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../i18n/lang';
+import PageHero from '../../components/PageHero.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Button from '../../components/Button.astro';
+import Label from '../../components/Label.astro';
+import { formatIssueDate } from '../../lib/issue-utils';
+import { langStaticPaths, localePath, type Lang } from '../../i18n/lang';
 import { t } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const projects = (await getCollection('projects')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const facts = (['projects.f1', 'projects.f2', 'projects.f3', 'projects.f4', 'projects.f5'] as const).map((k) => t(lang, k).split('|'));
+const ghosts = (['projects.g1', 'projects.g2', 'projects.g3'] as const).map((k) => t(lang, k).split('|'));
 ---
-<Base lang={lang} title={t(lang, 'nav.projects')}>
-  <h1>{t(lang, 'nav.projects')}</h1>
+<Base lang={lang} title={t(lang, 'nav.projects')} description={t(lang, 'projects.text')}>
+  <PageHero label={t(lang, 'projects.label')} title={t(lang, 'projects.title')} em={t(lang, 'projects.titleEm')} text={t(lang, 'projects.text')} shift={0.02} />
+
+  <section class="block">
+    {projects.length === 0 ? (
+      <div class="empty-state">
+        <span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div>
+          <h2>{t(lang, 'projects.emptyTitle')}</h2>
+          <p>{t(lang, 'projects.emptyText')}</p>
+          <div class="btns">
+            <Button href={localePath(lang, '/propose')} variant="ink">{t(lang, 'nav.propose')}</Button>
+            <Button href={localePath(lang, '/join')} variant="ghost">{t(lang, 'projects.joinHackathon')}</Button>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <>
+        <SectionTitle>{t(lang, 'projects.list')}</SectionTitle>
+        <div class="list">
+          {projects.map(({ data }) => (
+            <article class="project">
+              <Label>{t(lang, `projects.kind.${data.kind}`)} · {formatIssueDate(data.date, 'short', lang)}</Label>
+              <h3>{data.name}</h3>
+              <p>{data.pitch}</p>
+              <p class="meta">{data.team.join(', ')} · {data.tools.join(', ')}</p>
+              {data.url && <a href={data.url}>{t(lang, 'projects.try')}</a>}
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+  </section>
+
+  <section class="block">
+    <SectionTitle accent="tangerine">{t(lang, 'projects.format')}</SectionTitle>
+    <dl class="facts">
+      {facts.map(([value, text]) => <div class="fact"><dt><strong>{value}</strong></dt><dd>{text}</dd></div>)}
+    </dl>
+    <p class="intro">{t(lang, 'projects.goal')}</p>
+  </section>
+
+  {projects.length === 0 && (
+    <section class="block">
+      <SectionTitle accent="sky">{t(lang, 'projects.howAppear')}</SectionTitle>
+      <div class="card-tpl" aria-hidden="true">
+        {ghosts.map(([label, name, text]) => <div class="ghost-card"><span class="label">{label}</span><b>{name}</b><span>{text}</span></div>)}
+      </div>
+    </section>
+  )}
 </Base>
+
+<style>
+  .block { padding-top: 72px; }
+  .empty-state { border: 1.5px dashed var(--hairline); border-radius: var(--radius-glass); padding: 36px 28px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: center; }
+  .mark { display: grid; grid-template-columns: repeat(3, 18px); grid-template-rows: repeat(3, 18px); }
+  .mark i:nth-child(1) { grid-area: 3 / 1; background: var(--ember); }
+  .mark i:nth-child(2) { grid-area: 2 / 2; background: var(--sun-soft); }
+  .mark i:nth-child(3) { grid-area: 1 / 3; background: var(--sky); }
+  .empty-state h2 { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: -.02em; margin-bottom: 6px; }
+  .empty-state p { color: var(--ink-soft); }
+  .empty-state .btns { margin-top: 14px; }
+  .facts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--radius-glass); overflow: hidden; margin: 0; }
+  .fact { background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .fact strong { font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: -.03em; line-height: 1; }
+  .fact dd { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .intro { max-width: 62ch; color: var(--ink-soft); font-size: 17px; margin-top: 20px; }
+  .card-tpl, .list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .ghost-card { border: 1.5px dashed var(--hairline); border-radius: var(--radius-lg); min-height: 220px; padding: 20px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; color: var(--muted); }
+  .ghost-card b { font-family: var(--font-display); font-weight: 600; color: var(--ink-soft); font-size: 16px; }
+  .project { background: var(--surface-raised); border-radius: var(--radius-glass); padding: 24px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .project h3 { font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: -.02em; }
+  .project p:not(.label) { color: var(--ink-soft); }
+  .project .meta { font-family: var(--font-mono); font-size: 12.5px; }
+  @media (max-width: 900px) { .card-tpl, .list { grid-template-columns: 1fr; } .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .empty-state { grid-template-columns: 1fr; } }
+</style>

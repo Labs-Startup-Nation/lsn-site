@@ -1,11 +1,84 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../i18n/lang';
+import PageHero from '../../components/PageHero.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import NumberCard from '../../components/NumberCard.astro';
+import Button from '../../components/Button.astro';
+import Label from '../../components/Label.astro';
+import { getLatestIssue } from '../../lib/issues';
+import { langStaticPaths, localePath, type Lang } from '../../i18n/lang';
 import { t } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const latest = await getLatestIssue();
+const pillars = [
+  { n: 'p1', href: '/tech-watch' },
+  { n: 'p2', href: '/projects' },
+  { n: 'p3', href: '/propose' },
+] as const;
 ---
-<Base lang={lang} >
-  <h1>{t(lang, 'site.name')}</h1>
+<Base lang={lang}>
+  <PageHero small={false} label={t(lang, 'home.label')} title={t(lang, 'home.title')} em={t(lang, 'home.titleEm')} text={t(lang, 'home.text')}>
+    <div class="btns">
+      <Button href={localePath(lang, '/tech-watch')} variant="sun">{t(lang, 'home.ctaRead')}</Button>
+      <Button href={localePath(lang, '/propose')} variant="ghost">{t(lang, 'nav.propose')}</Button>
+    </div>
+  </PageHero>
+
+  <section class="block">
+    <SectionTitle>{t(lang, 'home.whatWeDo')}</SectionTitle>
+    <div class="pillars">
+      {pillars.map(({ n, href }) => (
+        <div class="pillar">
+          <Label>{t(lang, `home.${n}Label`)}</Label>
+          <h3>{t(lang, `home.${n}Title`)}</h3>
+          <p>{t(lang, `home.${n}Text`)}</p>
+          <a class="more" href={localePath(lang, href)}>{t(lang, `home.${n}Link`)}</a>
+          <p class="when">{t(lang, `home.${n}When`)}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {latest && (
+    <section class="block">
+      <SectionTitle>{t(lang, 'home.tops')}</SectionTitle>
+      <div class="home-tops" lang="en">
+        {latest.data.topStories.map((story, i) => <StoryCard story={story} shift={[-0.06, 0.04, 0.14][i % 3]} lang={lang} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="block">
+    <div class:list={['split', !latest && 'solo']}>
+      {latest && <div lang="en"><NumberCard number={latest.data.number} shift={0.12} lang={lang} tag={t(lang, 'issue.numberOfWeek')} /></div>}
+      <div class="callout">
+        <Label>{t(lang, 'home.ideaLabel')}</Label>
+        <h3>{t(lang, 'home.ideaTitle')}</h3>
+        <p>{t(lang, 'home.ideaText')}</p>
+        <div class="btns"><Button href={localePath(lang, '/propose')} variant="ink">{t(lang, 'nav.propose')}</Button></div>
+      </div>
+    </div>
+  </section>
 </Base>
+
+<style>
+  .block { padding-top: 72px; }
+  .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .pillar { background: var(--surface-raised); border-radius: var(--radius-glass); padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .pillar h3 { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: -.02em; line-height: 1.15; }
+  .pillar p:not(.label) { color: var(--ink-soft); font-size: 15.5px; }
+  .pillar p.when { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); margin-top: auto; padding-top: 12px; border-top: 1px solid var(--hairline); }
+  .pillar .more { font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .home-tops { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .split { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+  .split.solo { grid-template-columns: 1fr; }
+  .split > div { min-width: 0; }
+  .split :global(.number-card) { height: 100%; }
+  .callout { background: var(--surface-raised); border-radius: var(--radius-glass); padding: 28px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+  .callout h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(22px, 2.8vw, 28px); letter-spacing: -.025em; line-height: 1.12; }
+  .callout p:not(.label) { color: var(--ink-soft); }
+  @media (max-width: 900px) { .pillars, .home-tops, .split { grid-template-columns: 1fr; } }
+</style>

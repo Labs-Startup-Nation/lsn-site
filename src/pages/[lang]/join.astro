@@ -1,11 +1,70 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../i18n/lang';
+import PageHero from '../../components/PageHero.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Button from '../../components/Button.astro';
+import Label from '../../components/Label.astro';
+import { LINKEDIN_URL, CONTACT_EMAIL } from '../../data/site';
+import { langStaticPaths, localePath, type Lang } from '../../i18n/lang';
 import { t } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
 ---
-<Base lang={lang} title={t(lang, 'nav.join')}>
-  <h1>{t(lang, 'nav.join')}</h1>
+<Base lang={lang} title={t(lang, 'nav.join')} description={t(lang, 'join.text')}>
+  <PageHero label={t(lang, 'join.label')} title={t(lang, 'join.title')} em={t(lang, 'join.titleEm')} text={t(lang, 'join.text')} shift={0.12} />
+
+  <section class="block">
+    <div class="ways">
+      <div class="way">
+        <Label>{t(lang, 'join.w1Label')}</Label>
+        <h2>{t(lang, 'join.w1Title')}</h2>
+        <p>{t(lang, 'join.w1Text')}</p>
+        <div class="btns">
+          <Button href={localePath(lang, '/tech-watch')} variant="ink">{t(lang, 'home.p1Link')}</Button>
+          {LINKEDIN_URL && <Button href={LINKEDIN_URL} variant="ghost">{t(lang, 'join.w1Linkedin')}</Button>}
+        </div>
+      </div>
+      <div class="way">
+        <Label>{t(lang, 'join.w2Label')}</Label>
+        <h2>{t(lang, 'join.w2Title')}</h2>
+        <p>{t(lang, 'join.w2Text')}</p>
+        <p class="next">{LINKEDIN_URL ? <a href={LINKEDIN_URL}>{t(lang, 'join.w2Next')}</a> : t(lang, 'join.w2NextNoLink')}</p>
+      </div>
+      <div class="way">
+        <Label>{t(lang, 'join.w3Label')}</Label>
+        <h2>{t(lang, 'join.w3Title')}</h2>
+        <p>{t(lang, 'join.w3Text')}</p>
+        <div class="btns"><Button href={localePath(lang, '/propose')} variant="ink">{t(lang, 'nav.propose')}</Button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <SectionTitle accent="sky">{t(lang, 'join.contact')}</SectionTitle>
+    {LINKEDIN_URL || CONTACT_EMAIL ? (
+      <div class="contact">
+        {LINKEDIN_URL && <div class="cline"><Label>{t(lang, 'join.linkedin')}</Label><a href={LINKEDIN_URL}>{LINKEDIN_URL.replace(/^https:\/\/(www\.)?/, '')}</a></div>}
+        {CONTACT_EMAIL && <div class="cline"><Label>{t(lang, 'join.email')}</Label><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></div>}
+      </div>
+    ) : (
+      <p class="intro">{t(lang, 'join.noContact')} <a href={localePath(lang, '/propose')}>{t(lang, 'nav.propose')}</a></p>
+    )}
+  </section>
 </Base>
+
+<style>
+  .block { padding-top: 72px; }
+  .ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .way { background: var(--surface-raised); border-radius: var(--radius-glass); padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .way h2 { font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: -.02em; line-height: 1.15; }
+  .way p:not(.label) { color: var(--ink-soft); font-size: 15.5px; }
+  .way .btns, .way .next { margin-top: auto; padding-top: 8px; }
+  .next a { font-weight: 600; }
+  .contact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .cline { border: 1px solid var(--hairline); border-radius: var(--radius-glass); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; min-width: 0; overflow-wrap: anywhere; }
+  .intro { color: var(--ink-soft); font-size: 17px; max-width: 62ch; }
+  .intro a { font-weight: 600; }
+  @media (max-width: 900px) { .ways { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .contact { grid-template-columns: 1fr; } }
+</style>

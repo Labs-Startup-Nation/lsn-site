@@ -1,11 +1,69 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Label from '../../components/Label.astro';
+import { ASSOCIATION_STATUS } from '../../data/site';
+import { TEAM } from '../../data/team';
 import { langStaticPaths, type Lang } from '../../i18n/lang';
 import { t } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const TOOLS = ['ChatGPT', 'Claude', 'Lovable', 'Bolt', 'Cursor', 'GitHub', 'Vercel', 'Supabase'];
+const values = (['about.v1', 'about.v2', 'about.v3', 'about.v4'] as const).map((k) => t(lang, k).split('|'));
 ---
-<Base lang={lang} title={t(lang, 'nav.about')}>
-  <h1>{t(lang, 'nav.about')}</h1>
+<Base lang={lang} title={t(lang, 'nav.about')} description={t(lang, 'about.text')}>
+  <PageHero label={t(lang, 'about.label')} title={t(lang, 'about.title')} em={t(lang, 'about.titleEm')} text={t(lang, 'about.text')} shift={-0.1} />
+
+  <section class="block about-grid">
+    <div class="prose">
+      <p set:html={t(lang, 'about.p1')} />
+      <p>{t(lang, 'about.p2')}</p>
+      <p>{ASSOCIATION_STATUS ? ASSOCIATION_STATUS[lang] : t(lang, 'about.p3')}</p>
+      <div>
+        <Label class="tools-label">{t(lang, 'about.tools')}</Label>
+        <ul class="tools">{TOOLS.map((tool) => <li>{tool}</li>)}</ul>
+      </div>
+    </div>
+    <dl class="values">
+      {values.map(([title, text]) => <div><dt>{title}</dt><dd>{text}</dd></div>)}
+    </dl>
+  </section>
+
+  {TEAM.length > 0 && (
+    <section class="block">
+      <SectionTitle accent="salmon">{t(lang, 'about.team')}</SectionTitle>
+      <ul class="team">
+        {TEAM.map((m) => (
+          <li class="member">
+            {m.photo ? <img src={m.photo} alt="" width="56" height="56" /> : <span class="av" aria-hidden="true"><i></i></span>}
+            <b>{m.name}</b>
+            <span>{m.role} · {m.studies}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 </Base>
+
+<style>
+  .block { padding-top: 72px; }
+  .about-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; }
+  .prose { display: flex; flex-direction: column; gap: 14px; font-size: 17px; color: var(--ink-soft); max-width: 62ch; }
+  .prose :global(strong) { color: var(--ink); }
+  .prose :global(.tools-label) { margin-bottom: 10px; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
+  .tools li { font-family: var(--font-mono); font-size: 12.5px; padding: 6px 10px; border: 1px solid var(--hairline); border-radius: var(--radius-glass); }
+  .values { border-top: 1px solid var(--hairline); margin: 0; }
+  .values div { padding: 16px 0; border-bottom: 1px solid var(--hairline); display: flex; flex-direction: column; gap: 4px; }
+  .values dt { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -.015em; }
+  .values dd { margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; list-style: none; padding: 0; }
+  .member { border: 1px solid var(--hairline); border-radius: var(--radius-glass); padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .member img, .av { width: 56px; height: 56px; border-radius: var(--radius-glass); object-fit: cover; }
+  .av { background: var(--surface-raised); display: grid; place-items: center; }
+  .av i { width: 14px; height: 14px; background: var(--sky); box-shadow: -14px 14px 0 var(--ember); }
+  .member span { font-size: 14px; color: var(--muted); }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
