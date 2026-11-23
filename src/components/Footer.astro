@@ -1,0 +1,29 @@
+---
+import { NAV } from '../lib/nav';
+import { localePath, type Lang } from '../i18n/lang';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<footer class="foot">
+  <div class="wrap">
+    <span>{t(lang, 'footer.place')}</span>
+    <nav aria-label={t(lang, 'footer.label')}>
+      {NAV.map((item) => <a href={localePath(lang, item.path)}>{t(lang, item.key)}</a>)}
+      <a href={localePath(lang, '/legal')}>{t(lang, 'footer.legal')}</a>
+      <a href={localePath(lang, '/privacy')}>{t(lang, 'footer.privacy')}</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .foot { border-top: 1px solid var(--hairline); margin-top: 80px; }
+  .foot .wrap {
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding-block: 28px 40px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
+  }
+  nav { display: flex; gap: 8px 16px; flex-wrap: wrap; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>

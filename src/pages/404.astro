@@ -1,0 +1,39 @@
+---
+import '../styles/fonts';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { t } from '../i18n/ui';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{t('en', 'notFound.title')} · LSN</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main class="wrap nf">
+      <a href="/" class="home" aria-label="LSN"><Logo /></a>
+      <section>
+        <h1>{t('en', 'notFound.title')}</h1>
+        <p>{t('en', 'notFound.text')}</p>
+        <p><a href="/en/">{t('en', 'notFound.back')}</a></p>
+      </section>
+      <section lang="fr">
+        <h2>{t('fr', 'notFound.title')}</h2>
+        <p>{t('fr', 'notFound.text')}</p>
+        <p><a href="/fr/">{t('fr', 'notFound.back')}</a></p>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  .nf { padding-block: 48px; display: flex; flex-direction: column; gap: 32px; }
+  .home { height: 32px; display: inline-flex; }
+  h1, h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.025em; font-size: clamp(24px, 4vw, 36px); margin-bottom: 8px; }
+  p { color: var(--ink-soft); }
+</style>

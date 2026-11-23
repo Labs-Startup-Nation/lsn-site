@@ -1,0 +1,21 @@
+---
+import { swapLang, type Lang } from '../i18n/lang';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const other: Lang = lang === 'en' ? 'fr' : 'en';
+---
+<a class="lang" href={swapLang(Astro.url.pathname, other)} hreflang={other} lang={other}>
+  <span aria-hidden="true">{t(lang, 'lang.otherShort')}</span>
+  <span class="visually-hidden">{t(lang, 'lang.other')}</span>
+</a>
+
+<style>
+  .lang {
+    flex: none; font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: .06em;
+    text-decoration: none; padding: 8px 10px; border: 1px solid var(--hairline); border-radius: var(--radius-glass);
+    color: var(--ink-soft); min-height: 36px; display: inline-flex; align-items: center;
+  }
+  .lang:hover { color: var(--ink); background: var(--surface-raised); }
+</style>

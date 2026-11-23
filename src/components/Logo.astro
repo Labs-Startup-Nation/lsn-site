@@ -1,0 +1,20 @@
+---
+import mark from '../assets/logo/lsn-logo-ink.svg?raw';
+import full from '../assets/logo/lsn-logo-full-ink.svg?raw';
+
+interface Props { tone?: 'ink' | 'cream'; full?: boolean; class?: string }
+const { tone = 'ink', full: isFull = false, class: className } = Astro.props;
+// Wordmark fill follows the theme; the three brand squares keep their colours.
+const svg = (isFull ? full : mark)
+  .replaceAll('#1F1409', 'currentColor')
+  .replace(/\s(width|height)="[^"]*"/g, '')
+  .replace('role="img"', 'aria-hidden="true" focusable="false"');
+---
+<span class:list={['logo', `logo--${tone}`, className]} set:html={svg} />
+
+<style>
+  .logo { display: inline-flex; line-height: 0; }
+  .logo :global(svg) { height: 100%; width: auto; }
+  .logo--ink { color: var(--ink); }
+  .logo--cream { color: var(--smoke-ink); }
+</style>
