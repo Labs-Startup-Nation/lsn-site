@@ -24,6 +24,19 @@ npm run test:e2e   # tests des pages dans un navigateur (Playwright)
 
 Voir [docs/publier-un-numero.md](docs/publier-un-numero.md).
 
+## Avant la mise en ligne
+
+Ce qui reste à faire, avec les comptes de LSN :
+
+1. Renseigner `src/data/site.ts` (LinkedIn, e-mail, éditeur, directeur de la publication) et, si des membres ont donné leur accord écrit, `src/data/team.ts`. `npm run check:launch` doit afficher « all contact and legal values are set ».
+2. Faire relire `/fr/legal` et `/fr/privacy` par un membre.
+3. Supabase (projet en région UE) : `npx supabase link --project-ref <ref>` puis `npx supabase db push`. Vérifier dans le tableau de bord que RLS est active sur `proposals`.
+4. Vercel (compte gratuit de LSN) : importer le dépôt GitHub, ajouter `SITE_URL`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` (Production et Preview), activer *Web Analytics*.
+5. Domaine : l'ajouter dans Vercel, configurer le DNS chez le registrar, attendre le HTTPS.
+6. Google Search Console : vérifier le domaine, soumettre `https://<domaine>/sitemap-index.xml`.
+7. Tester une proposition depuis le site en ligne et la retrouver dans Supabase.
+8. Tester sur un iPhone et un Android réels, en clair et en sombre, avec « Réduire les animations ».
+
 ## Où sont les choses
 
 - `src/content/issues/` : un fichier JSON par numéro, nommé par la date du lundi

@@ -63,3 +63,9 @@ test('header logo keeps its three brand squares', async ({ page }) => {
   await expect(rects).toHaveCount(3);
   for (const r of await rects.all()) expect((await r.boundingBox())!.width).toBeGreaterThan(2);
 });
+
+test('no analytics script and no cookie outside Vercel', async ({ page, context }) => {
+  await page.goto('/en/');
+  await expect(page.locator('script[src*="_vercel"], script[data-sdkn]')).toHaveCount(0);
+  expect(await context.cookies()).toEqual([]);
+});
