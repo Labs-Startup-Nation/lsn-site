@@ -1,0 +1,417 @@
+{
+  "date": "2026-10-26",
+  "week": 44,
+  "title": "Copilot becomes an agent hub, Anthropic files for its IPO",
+  "oneLine": "GitHub rebuilt Copilot around AI agents, Anthropic filed to go public, Big Tech’s AI spending met its earnings test, and about 60,000 Microsoft employees were offered voluntary buyouts.",
+  "period": "News from 24 to 30 October 2026 · updated 31 October 2026",
+  "topStories": [
+    {
+      "label": "Dev tools",
+      "title": "GitHub turns Copilot into a control centre for AI agents.",
+      "text": "At GitHub Universe on 28 October, GitHub added Copilot projects, letting several AI agents work in parallel across repositories, and made Copilot Fusion, which picks and combines AI models automatically, generally available.",
+      "url": "https://github.blog/news-insights/company-news/github-universe-2026-evolving-every-layer-of-the-stack/"
+    },
+    {
+      "label": "Market",
+      "title": "Anthropic files publicly for its stock market listing.",
+      "text": "The maker of Claude filed its S-1 with the US regulator on 26 October; the number of shares and the price are not set yet, and press reports point to a listing in November.",
+      "url": "https://www.anthropic.com/news"
+    },
+    {
+      "label": "Jobs",
+      "title": "Microsoft offers voluntary buyouts to about 60,000 employees.",
+      "text": "Eligible staff in participating teams in four countries can choose to leave with financial support, after a retirement programme and layoffs earlier this year.",
+      "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer/"
+    }
+  ],
+  "sections": [
+    {
+      "id": "market",
+      "title": "Market & money",
+      "accent": "ember",
+      "articles": [
+        {
+          "label": "Market · US · 26 October",
+          "title": "Anthropic makes its IPO filing public",
+          "text": "Anthropic, the company behind the Claude AI assistant, filed its S-1, the document a company must file before listing on the US stock market, with plans to list on Nasdaq under the ticker ANT. The number of shares and the price range are not set yet; press reports point to a listing in November.",
+          "why": "An IPO lets the public buy shares for the first time. The filing gives outsiders a rare, detailed look at the finances of one of the main AI model makers.",
+          "figure": "ANT",
+          "figureLabel": "Planned Nasdaq ticker",
+          "url": "https://www.anthropic.com/news",
+          "sources": [
+            {
+              "name": "Anthropic newsroom",
+              "url": "https://www.anthropic.com/news"
+            },
+            {
+              "name": "Reuters via Bernama",
+              "url": "https://bernama.com/en/world/news.php?id=2626193"
+            }
+          ]
+        },
+        {
+          "label": "Market · US · 28 October",
+          "title": "Microsoft and Alphabet earnings put the AI boom to the test",
+          "text": "Microsoft’s quarterly revenue rose 19% to $92.3B, with its Azure cloud up 48%. Alphabet’s revenue rose 25% to $127.6B and Google Cloud sales grew 103%, but $51.4B of quarterly infrastructure spending exceeded the cash its business generated, leaving negative free cash flow of $9.1B; its shares fell after the results.",
+          "why": "Investors are checking whether the money poured into AI data centres pays off. The four biggest US tech groups are expected to spend around $760B on infrastructure in 2026, almost double 2025.",
+          "figure": "$92.3B",
+          "figureLabel": "Microsoft quarterly revenue",
+          "url": "https://www.microsoft.com/en-us/investor",
+          "sources": [
+            {
+              "name": "Microsoft Investor Relations",
+              "url": "https://www.microsoft.com/en-us/investor"
+            },
+            {
+              "name": "Alphabet Investor Relations",
+              "url": "https://abc.xyz/investor/"
+            },
+            {
+              "name": "Statista",
+              "url": "https://www.statista.com/chart/35046/capital-expenditure-of-meta-alphabet-amazon-and-microsoft/"
+            }
+          ]
+        },
+        {
+          "label": "Market · India · 28 October",
+          "title": "Jio Platforms’ record IPO puts India at the top of the global IPO market",
+          "text": "The telecom and digital-services arm of Reliance jumped about 27% on its first trading day, in India’s biggest-ever IPO, and reached a market value of about $144B. Indian companies raised $4.8B through IPOs in October, more than the US over the same period.",
+          "why": "Large tech listings are no longer concentrated in the US: India is becoming one of the main places where tech companies go public.",
+          "figure": "+27%",
+          "figureLabel": "First trading day",
+          "url": "https://bloomberg.com/news/articles/2026-10-30/jio-boosts-india-to-top-of-global-ipo-market-with-record-october",
+          "sources": [
+            {
+              "name": "Bloomberg (record October)",
+              "url": "https://bloomberg.com/news/articles/2026-10-30/jio-boosts-india-to-top-of-global-ipo-market-with-record-october"
+            },
+            {
+              "name": "Bloomberg (Jio debut)",
+              "url": "https://bloomberg.com/news/articles/2026-10-29/jio-platforms-adds-36-billion-in-value-after-india-ipo-surge"
+            }
+          ]
+        },
+        {
+          "label": "Market · France",
+          "title": "A quiet week for French startup funding, with AI taking almost all of it",
+          "text": "From 24 to 30 October, 8 French startups raised €41.2M, of which €37.7M (91.5%) went to companies using AI. The previous week had reached €270.9M, mostly thanks to one large round for Pigment.",
+          "why": "Weekly totals swing with one or two big deals; the stable trend in 2026 is that most of the money goes to AI companies.",
+          "figure": "€41.2M",
+          "figureLabel": "Raised by 8 French startups",
+          "url": "https://www.maddyness.com/2026/10/30/french-tech-lia-concentre-plus-de-90-des-41-millions-deuros-leves-cette-semaine/",
+          "sources": [
+            {
+              "name": "Maddyness",
+              "url": "https://www.maddyness.com/2026/10/30/french-tech-lia-concentre-plus-de-90-des-41-millions-deuros-leves-cette-semaine/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jobs",
+      "title": "Jobs & careers",
+      "accent": "tangerine",
+      "articles": [
+        {
+          "label": "Jobs · US · UK · Canada · India · 26 October",
+          "title": "Microsoft offers voluntary buyouts to about 60,000 employees",
+          "text": "Microsoft opened a time-limited Voluntary Exit Offer to eligible employees in participating teams in the US, Canada, the UK and India. About 60,000 people are eligible, roughly a quarter of the workforce. It follows a voluntary retirement programme in the spring and layoffs in July.",
+          "why": "Large tech companies are shrinking or reshaping teams while increasing AI investment, which tightens the market for experienced and junior profiles alike.",
+          "figure": "60,000",
+          "figureLabel": "Employees eligible",
+          "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer/",
+          "sources": [
+            {
+              "name": "Official Microsoft Blog",
+              "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer/"
+            },
+            {
+              "name": "Fast Company",
+              "url": "https://www.fastcompany.com/91630049/c_fit"
+            },
+            {
+              "name": "Windows Central",
+              "url": "https://www.windowscentral.com/microsoft/microsoft-extends-voluntary-exit-program-to-60-000-employees-are-layoffs-around-the-corner"
+            }
+          ]
+        },
+        {
+          "label": "Jobs · France · 8 October",
+          "title": "Fewer permanent hires for young people in AI-exposed jobs (Banque de France)",
+          "text": "Since November 2022, permanent-contract (CDI) hiring of 21–29 year olds fell 28.3% in the jobs most exposed to generative AI, against 7.5% in the least exposed; for young developers and IT engineers the drop is about 42%. The authors do not claim AI is the only cause: the post-Covid tech slowdown and higher interest rates overlap with the same period.",
+          "why": "This is one of the first French measurements of how AI may be changing entry-level hiring; Apec also reports a 13% drop in hiring of managers with five years’ experience or less between 2023 and 2025.",
+          "figure": "−28.3%",
+          "figureLabel": "Hiring in the most exposed jobs",
+          "url": "https://www.banque-france.fr/fr/publications-et-statistiques/publications/ia-generative-les-premiers-changements-du-marche-du-travail-sur-les-jeunes",
+          "sources": [
+            {
+              "name": "Banque de France (study)",
+              "url": "https://www.banque-france.fr/fr/publications-et-statistiques/publications/ia-generative-les-premiers-changements-du-marche-du-travail-sur-les-jeunes"
+            },
+            {
+              "name": "HEC Paris (co-author)",
+              "url": "https://www.hec.edu/en/node/18834801"
+            },
+            {
+              "name": "Apec, AI and managers 2026",
+              "url": "https://corporate.apec.fr/home/nos-etudes/toutes-nos-etudes/les-cadres-et-l-ia-2026.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI & tools to try",
+      "accent": "sky",
+      "note": "No pricing or free-plan changes this week for the main vibe-coding tools (Lovable, Bolt, Replit, Cursor, v0).",
+      "articles": [
+        {
+          "label": "AI tools · Global · 26 October",
+          "title": "OpenAI releases GPT-6.1 Terra, half the price of its previous models",
+          "text": "The new mid-range model is available to paid ChatGPT plans in ChatGPT Work and Codex, and to developers through the API. For apps that call it through the API (the interface programs use to talk to it), usage now costs half as much as GPT-6.1 Sol, and OpenAI says it is more than three times faster.",
+          "why": "AI apps pay per amount of text processed; a 50% price cut makes AI features cheaper to run in any product built on OpenAI.",
+          "figure": "−50%",
+          "figureLabel": "API price vs GPT-6.1 Sol",
+          "url": "https://openai.com/index/introducing-gpt-6-1-terra/",
+          "sources": [
+            {
+              "name": "OpenAI (announcement)",
+              "url": "https://openai.com/index/introducing-gpt-6-1-terra/"
+            },
+            {
+              "name": "BleepingComputer",
+              "url": "https://bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing"
+            }
+          ]
+        },
+        {
+          "label": "AI tools · Global",
+          "title": "This week’s notable launches on Product Hunt",
+          "text": "Strawberry 1.0, an AI web browser aimed at teams, finished first on 26 October. The same top 10 included desigma, which presents itself as a free alternative to Figma.",
+          "why": "Product Hunt is where new apps launch every day; AI browsers and AI assistants were the dominant category this week.",
+          "figure": "#1",
+          "figureLabel": "Strawberry 1.0 on 26 October",
+          "url": "https://www.producthunt.com/leaderboard/weekly/2026/44",
+          "sources": [
+            {
+              "name": "Weekly leaderboard",
+              "url": "https://www.producthunt.com/leaderboard/weekly/2026/44"
+            },
+            {
+              "name": "Top of 26 October",
+              "url": "https://www.producthunt.com/leaderboard/daily/2026/10/26"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev-tools",
+      "title": "Dev tools & stack",
+      "accent": "ember",
+      "articles": [
+        {
+          "label": "Dev tools · Global · 28 October",
+          "title": "GitHub Universe: Copilot becomes a place to manage AI agents",
+          "text": "GitHub added Copilot projects (public preview) to its Copilot app, so several AI agents can work in parallel on tasks spanning multiple code repositories, made Copilot Fusion generally available to pick and combine AI models automatically, and added connectors so agents can reach other tools. GitHub Enterprise customers can now get Copilot for every licensed user and pay for the AI they actually use.",
+          "why": "The developer’s job is shifting from writing every line to describing tasks, delegating them to agents and reviewing the result, which is close to how a PM works with a team.",
+          "figure": "GA",
+          "figureLabel": "Copilot Fusion, all plans",
+          "url": "https://github.blog/news-insights/company-news/github-universe-2026-evolving-every-layer-of-the-stack/",
+          "sources": [
+            {
+              "name": "GitHub Blog (Universe recap)",
+              "url": "https://github.blog/news-insights/company-news/github-universe-2026-evolving-every-layer-of-the-stack/"
+            },
+            {
+              "name": "GitHub Changelog (Fusion)",
+              "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion"
+            },
+            {
+              "name": "The Next Web",
+              "url": "https://thenextweb.com/news/github-universe-copilot-fusion-octoverse-agents"
+            }
+          ]
+        },
+        {
+          "label": "Dev tools · Global · 28 October",
+          "title": "GitHub Octoverse 2026: agents now part of everyday development",
+          "text": "GitHub recorded 17.9 billion code pushes over the year to September, more than 2024 and 2025 combined. Between September 2025 and September 2026, commits (saved changes) grew about sixfold and merged pull requests about fourfold, with a sharp acceleration after June.",
+          "why": "More code is now proposed by agents than humans can easily review; reviewing, testing and deciding what to merge become the key skills.",
+          "figure": "17.9B",
+          "figureLabel": "Code pushes in a year",
+          "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/",
+          "sources": [
+            {
+              "name": "GitHub Blog (Octoverse 2026)",
+              "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/"
+            },
+            {
+              "name": "The Next Web",
+              "url": "https://thenextweb.com/news/github-universe-copilot-fusion-octoverse-agents"
+            }
+          ]
+        },
+        {
+          "label": "Dev tools · Global · 26 October",
+          "title": "Supabase makes scoped access tokens the default",
+          "text": "Personal access tokens created in the Supabase dashboard are now limited by default to chosen projects and permissions, with an expiry date (generally available since 28 September, detailed in a blog post on 26 October). They apply to the Management API, the command-line tool and Supabase’s MCP server, which lets AI agents act on a database.",
+          "why": "As AI agents get keys to databases and tools, limiting what each key can do (the ‘least privilege’ principle) reduces the damage if a key leaks or an agent makes a mistake.",
+          "figure": "28 Sept",
+          "figureLabel": "Scoped tokens generally available",
+          "url": "https://supabase.com/blog/scope-your-personal-access-tokens",
+          "sources": [
+            {
+              "name": "Supabase Blog",
+              "url": "https://supabase.com/blog/scope-your-personal-access-tokens"
+            },
+            {
+              "name": "Supabase Changelog",
+              "url": "https://supabase.com/changelog/scoped-personal-access-tokens-ga"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paris",
+      "title": "Paris & Île-de-France",
+      "accent": "salmon",
+      "articles": [
+        {
+          "label": "Paris · Station F",
+          "title": "TikTok and STATION F select the first startups for an online-safety incubator",
+          "text": "Announced by TikTok on 24 September, the TikTok Online Safety Innovation Program will host ten startups for six months on the STATION F campus, working on online safety, from digital identity to family protection. The first cohort is being selected in October.",
+          "why": "STATION F, the world’s largest startup campus, hosts many programmes run with large companies; several Paris tech events in November are listed in Coming up.",
+          "figure": "10",
+          "figureLabel": "Startups for six months",
+          "url": "https://newsroom.tiktok.com/tiktok-et-station-f-sassocient-pour-crer-un-incubateur-ddi-la-scurit-en-ligne?lang=fr",
+          "sources": [
+            {
+              "name": "TikTok Newsroom",
+              "url": "https://newsroom.tiktok.com/tiktok-et-station-f-sassocient-pour-crer-un-incubateur-ddi-la-scurit-en-ligne?lang=fr"
+            },
+            {
+              "name": "STATION F events",
+              "url": "https://stationf.co/events"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "title": "Rules & society",
+      "accent": "tangerine",
+      "articles": [
+        {
+          "label": "Rules · EU",
+          "title": "Next AI Act date: 2 December 2026",
+          "text": "No new texts this week. On 2 December, a new banned practice takes effect, and AI systems already on the market before August 2026 must start labelling AI-generated content.",
+          "why": "The EU AI Act is the first broad law on AI; its obligations arrive in stages, and the rules for high-risk uses were pushed back to December 2027.",
+          "figure": "2 Dec",
+          "figureLabel": "Next date in force",
+          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202601744",
+          "sources": [
+            {
+              "name": "EUR-Lex, Regulation (EU) 2026/1744",
+              "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202601744"
+            },
+            {
+              "name": "European Commission, AI Act",
+              "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "agenda": [
+    {
+      "date": "5 Nov.",
+      "title": "GreenTech Forum, STATION F (Paris)",
+      "url": "https://stationf.co/events",
+      "text": "Day-long event on green tech startups and innovation."
+    },
+    {
+      "date": "9–12 Nov.",
+      "title": "Web Summit, Lisbon",
+      "url": "https://websummit.com/",
+      "text": "One of Europe’s largest tech conferences: startups, investors and policy."
+    },
+    {
+      "date": "November",
+      "title": "Anthropic’s IPO (expected)",
+      "url": "https://www.anthropic.com/news",
+      "text": "Reported timing; the exact date and price are not yet set."
+    },
+    {
+      "date": "18–19 Nov.",
+      "title": "Tech Show Paris, Porte de Versailles",
+      "url": "https://www.techshowparis.fr/en/espace-startups",
+      "text": "Trade show on cloud, cybersecurity, data and AI, with a startup area."
+    },
+    {
+      "date": "19 Nov.",
+      "title": "AI Builders Meetup by Databricks x OpenAI, STATION F",
+      "url": "https://stationf.co/events",
+      "text": "Evening meetup for people building with AI in Paris."
+    },
+    {
+      "date": "1 Dec.",
+      "title": "Supabase removes four framework adapters (Hono, H3, Elysia, NestJS) from @supabase/server",
+      "url": "https://supabase.com/changelog/supabase-server-adapters-deprecated",
+      "text": "Projects built with these adapters must switch to the recommended setup before this date."
+    },
+    {
+      "date": "2 Dec.",
+      "title": "AI Act: AI-generated content labelling",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202601744",
+      "text": "Applies to AI systems already on the market before August 2026."
+    }
+  ],
+  "concept": {
+    "name": "MCP (Model Context Protocol)",
+    "whatItIs": "An open standard that lets an AI assistant or agent connect to outside tools and data (a database, a calendar, a code repository, a design file) in the same way for every tool, instead of a custom integration each time.",
+    "thinkOfIt": "A universal plug, like USB-C for AI: any tool that offers an MCP server can be plugged into any AI app that supports MCP.",
+    "seenThisWeek": "GitHub’s new Copilot connectors let agents reach other tools, and Supabase’s scoped tokens now cover its MCP server, which lets agents work on a database.",
+    "inPractice": "When an AI tool says it ‘supports MCP’, it means it can be connected to your other apps; what it may then read or change depends on the permissions of the key it is given."
+  },
+  "number": {
+    "value": "40%",
+    "label": "GitHub · September 2026",
+    "text": "Share of pull requests (proposed code changes) on GitHub started with an AI agent in September 2026, up from 17% in March.",
+    "source": {
+      "name": "GitHub Octoverse 2026",
+      "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/"
+    }
+  },
+  "terms": [
+    {
+      "term": "AI agent",
+      "definition": "An AI that carries out a multi-step task on its own (read code, make changes, run tests) rather than only answering a question."
+    },
+    {
+      "term": "Repository (repo)",
+      "definition": "The folder that holds a project’s code and its full history of changes, usually hosted on GitHub."
+    },
+    {
+      "term": "Commit / pull request",
+      "definition": "A commit is a saved change to the code; a pull request bundles changes and asks for them to be reviewed before they join the main version."
+    },
+    {
+      "term": "API",
+      "definition": "The interface programs use to talk to each other. AI APIs bill by the ‘token’, a chunk of text of about three quarters of a word."
+    },
+    {
+      "term": "Access token",
+      "definition": "A secret key that lets a script, tool or agent act on your account. A ‘scoped’ token can only do what it is explicitly allowed to."
+    },
+    {
+      "term": "Public preview vs GA",
+      "definition": "Public preview: available to try but may still change. GA (general availability): stable and officially supported."
+    }
+  ]
+}

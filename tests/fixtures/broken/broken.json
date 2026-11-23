@@ -1,0 +1,61 @@
+{
+  "date": "26/10/2026",
+  "week": 2,
+  "title": "A minimal issue used by the tests",
+  "oneLine": "Only the required parts of an issue, to check that empty parts are hidden.",
+  "topStories": [
+    {
+      "label": "Test",
+      "title": "One top story only",
+      "text": "A short text.",
+      "url": "http://example.org/insecure"
+    }
+  ],
+  "sections": [
+    {
+      "id": "market",
+      "title": "Market & money",
+      "accent": "ember",
+      "articles": [
+        {
+          "label": "Market \u00b7 Test",
+          "title": "One article",
+          "text": "Some text.",
+          "why": "Because it is a test.",
+          "figure": "1",
+          "figureLabel": "Article",
+          "url": "https://example.org/article",
+          "sources": [
+            {
+              "name": "Example",
+              "url": "https://example.org/source"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jobs",
+      "title": "Jobs & careers",
+      "accent": "tangerine",
+      "articles": []
+    }
+  ],
+  "agenda": [],
+  "concept": {
+    "name": "Test concept",
+    "whatItIs": "A thing.",
+    "thinkOfIt": "Like another thing.",
+    "seenThisWeek": "In the tests.",
+    "inPractice": "Nothing."
+  },
+  "number": {
+    "value": "1",
+    "text": "One number.",
+    "source": {
+      "name": "Example",
+      "url": "https://example.org/n"
+    }
+  },
+  "terms": []
+}
