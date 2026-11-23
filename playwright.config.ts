@@ -10,7 +10,11 @@ export default defineConfig({
     port: 4399,
     reuseExistingServer: false,
     timeout: 180_000,
-    env: { ISSUES_EXTRA: 'tests/fixtures/issues' },
+    env: {
+      ISSUES_EXTRA: 'tests/fixtures/issues',
+      PUBLIC_SUPABASE_URL: 'https://test-project.supabase.co',
+      PUBLIC_SUPABASE_ANON_KEY: 'test-anon-key',
+    },
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },

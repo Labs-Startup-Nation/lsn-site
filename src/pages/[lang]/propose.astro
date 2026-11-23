@@ -1,11 +1,154 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { langStaticPaths, type Lang } from '../../i18n/lang';
-import { t } from '../../i18n/ui';
+import PageHero from '../../components/PageHero.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import Button from '../../components/Button.astro';
+import Label from '../../components/Label.astro';
+import { KINDS, TIMINGS, MAX_LENGTHS } from '../../lib/proposal';
+import { CONTACT_EMAIL, REPLY_DELAY } from '../../data/site';
+import { langStaticPaths, localePath, type Lang } from '../../i18n/lang';
+import { ui, t, type UiKey } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.params.lang as Lang;
+const steps = (['propose.s1', 'propose.s2', 'propose.s3', 'propose.s4'] as const).map((k) => t(lang, k).split('|'));
+const messages = {
+  errors: Object.fromEntries((['form.errRequired', 'form.errEmail', 'form.errTooLong', 'form.errConsent'] as UiKey[]).map((k) => [k, ui[lang][k]])),
+  submit: t(lang, 'form.submit'),
+  sending: t(lang, 'form.sending'),
+  success: t(lang, 'form.success', { delay: REPLY_DELAY[lang] }),
+  error: CONTACT_EMAIL ? t(lang, 'form.errorEmail', { email: CONTACT_EMAIL }) : t(lang, 'form.error'),
+};
 ---
-<Base lang={lang} title={t(lang, 'nav.propose')}>
-  <h1>{t(lang, 'nav.propose')}</h1>
+<Base lang={lang} title={t(lang, 'nav.propose')} description={t(lang, 'propose.text')}>
+  <PageHero label={t(lang, 'propose.label')} title={t(lang, 'propose.title')} em={t(lang, 'propose.titleEm')} text={t(lang, 'propose.text')} shift={0.08} />
+
+  <section class="block">
+    <SectionTitle>{t(lang, 'propose.how')}</SectionTitle>
+    <ol class="steps">
+      {steps.map(([title, text]) => <li><h3>{title}</h3><p>{text}</p></li>)}
+    </ol>
+  </section>
+
+  <section class="block">
+    <SectionTitle accent="tangerine" id="form-title">{t(lang, 'propose.yours')}</SectionTitle>
+    <div class="formwrap">
+      <form id="proposal" novalidate aria-labelledby="form-title" data-messages={JSON.stringify(messages)}>
+        <div class="two">
+          <div class="field">
+            <label for="p-name">{t(lang, 'form.name')}</label>
+            <input id="p-name" name="name" type="text" autocomplete="name" required maxlength={MAX_LENGTHS.name} aria-describedby="p-name-error" />
+            <p class="err" id="p-name-error"></p>
+          </div>
+          <div class="field">
+            <label for="p-email">{t(lang, 'form.email')}</label>
+            <input id="p-email" name="email" type="email" autocomplete="email" required maxlength={MAX_LENGTHS.email} aria-describedby="p-email-error" />
+            <p class="err" id="p-email-error"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="p-org">{t(lang, 'form.org')} <span class="hint">{t(lang, 'form.optional')}</span></label>
+          <input id="p-org" name="organisation" type="text" autocomplete="organization" maxlength={MAX_LENGTHS.organisation} placeholder={t(lang, 'form.orgPlaceholder')} aria-describedby="p-org-error" />
+          <p class="err" id="p-org-error"></p>
+        </div>
+        <fieldset class="field">
+          <legend>{t(lang, 'form.kind')}</legend>
+          <div class="chips">
+            {KINDS.map((k, i) => <label><input type="radio" name="kind" value={k} checked={i === 0} />{t(lang, `form.kind.${k}`)}</label>)}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="p-problem">{t(lang, 'form.problem')}</label>
+          <span class="hint" id="p-problem-hint">{t(lang, 'form.problemHint')}</span>
+          <textarea id="p-problem" name="problem" required maxlength={MAX_LENGTHS.problem} aria-describedby="p-problem-hint p-problem-error"></textarea>
+          <p class="err" id="p-problem-error"></p>
+        </div>
+        <div class="field">
+          <label for="p-v1">{t(lang, 'form.v1')}</label>
+          <span class="hint" id="p-v1-hint">{t(lang, 'form.v1Hint')}</span>
+          <textarea id="p-v1" name="first_version" class="short" maxlength={MAX_LENGTHS.first_version} aria-describedby="p-v1-hint p-v1-error"></textarea>
+          <p class="err" id="p-v1-error"></p>
+        </div>
+        <div class="field">
+          <label for="p-when">{t(lang, 'form.timing')}</label>
+          <select id="p-when" name="timing">
+            {TIMINGS.map((v) => <option value={v}>{t(lang, `form.timing.${v}`)}</option>)}
+          </select>
+        </div>
+        <div class="trap" aria-hidden="true">
+          <label for="p-website">{t(lang, 'form.trap')}</label>
+          <input id="p-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="field consent">
+          <div class="check">
+            <input id="p-consent" name="consent" type="checkbox" required aria-describedby="p-consent-error" />
+            <label for="p-consent">{t(lang, 'form.consent')} <a href={localePath(lang, '/privacy')}>{t(lang, 'form.consentLink')}</a>.</label>
+          </div>
+          <p class="err" id="p-consent-error"></p>
+        </div>
+        <div class="btns"><Button type="submit" variant="ink" id="p-submit">{t(lang, 'form.submit')}</Button></div>
+        <p class="ok" role="status" id="p-status"></p>
+        <p class="ko" role="alert" id="p-alert"></p>
+      </form>
+      <div class="aside">
+        <div class="box">
+          <Label>{t(lang, 'propose.fitLabel')}</Label>
+          <h3>{t(lang, 'propose.fitTitle')}</h3>
+          <ul>{t(lang, 'propose.fit').split('|').map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div class="box">
+          <Label>{t(lang, 'propose.noFitLabel')}</Label>
+          <h3>{t(lang, 'propose.noFitTitle')}</h3>
+          <ul>{t(lang, 'propose.noFit').split('|').map((x) => <li>{x}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>
+
+<script>
+  import { initProposalForm } from '../../scripts/propose';
+  initProposalForm();
+</script>
+
+<style>
+  .block { padding-top: 72px; }
+  .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; padding: 0; list-style: none; }
+  .steps li { counter-increment: s; background: var(--surface-raised); border-radius: var(--radius-glass); padding: 20px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .steps li::before { content: counter(s); font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--label-fire); line-height: 1; }
+  .steps h3 { font-family: var(--font-display); font-weight: 600; font-size: 16px; letter-spacing: -.015em; }
+  .steps p { color: var(--ink-soft); font-size: 14.5px; }
+  .formwrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  form { display: flex; flex-direction: column; gap: 18px; background: var(--surface-raised); border-radius: var(--radius-glass); padding: 28px; position: relative; min-width: 0; }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field > label, legend { font-weight: 600; font-size: 14.5px; padding: 0; }
+  .hint { font-size: 13.5px; color: var(--muted); font-weight: 400; }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  input[type='text'], input[type='email'], textarea, select { font: inherit; font-size: 16px; color: var(--ink); background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-glass); padding: 11px 12px; width: 100%; min-height: 44px; }
+  input:hover, textarea:hover, select:hover { border-color: var(--muted); }
+  [aria-invalid='true'] { border-color: var(--label-fire) !important; }
+  textarea { min-height: 120px; resize: vertical; }
+  textarea.short { min-height: 90px; }
+  fieldset { border: 0; margin: 0; padding: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; min-height: 44px; border: 1px solid var(--hairline); border-radius: var(--radius-glass); background: var(--surface); font-weight: 500; font-size: 14.5px; cursor: pointer; }
+  .chips input { accent-color: var(--ember); margin: 0; }
+  .chips label:has(input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .chips label:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; }
+  .check input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ember); flex: none; }
+  .check label { font-size: 14.5px; color: var(--ink-soft); }
+  .check a { color: var(--ink); font-weight: 600; }
+  .err { color: var(--label-fire); font-size: 13.5px; font-weight: 500; }
+  .err:empty, .ok:empty, .ko:empty { display: none; }
+  .ok, .ko { padding: 12px 14px; border-radius: var(--radius-glass); font-size: 15px; }
+  .ok { background: var(--sky-soft); color: var(--on-sky-soft); font-weight: 600; }
+  .ko { background: var(--surface); color: var(--label-fire); border: 1px solid var(--label-fire); }
+  .trap { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  .aside { display: flex; flex-direction: column; gap: 16px; }
+  .aside .box { border: 1px solid var(--hairline); border-radius: var(--radius-glass); padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .aside h3 { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -.015em; }
+  .aside ul { padding-left: 18px; color: var(--ink-soft); font-size: 15px; display: flex; flex-direction: column; gap: 6px; }
+  @media (max-width: 900px) { .formwrap { grid-template-columns: 1fr; } .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .steps, .two { grid-template-columns: 1fr; } form { padding: 20px; } }
+</style>
