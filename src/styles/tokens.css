@@ -1,0 +1,56 @@
+/* LSN design tokens — copied from the validated mockup (light + "Nuit chaude" dark). */
+:root {
+  color-scheme: light;
+  --surface: #FFFBF0;
+  --surface-raised: #FFF4DC;
+  --hairline: #EFE1C2;
+  --ink: #1F1409;
+  --ink-soft: #4A3B2A;
+  --muted: #6B5A45;
+  --label-fire: #B32100;
+  --ember: #FB2A04;
+  --tangerine: #FF7B0F;
+  --salmon: #FB8E56;
+  --sun: #FEFC76;
+  --sun-soft: #FCE889;
+  --sky: #14CBFD;
+  --sky-soft: #DDF5FE;
+  --on-sky-soft: #05607A;
+  --on-bright: #1F1409;
+  --smoke: rgba(31, 20, 9, .62);
+  --smoke-opaque: #3A2A1C;
+  --smoke-line: rgba(255, 251, 240, .28);
+  --smoke-grain: rgba(255, 251, 240, .14);
+  --smoke-ink: #FFFBF2;
+  --smoke-ink-soft: #FAF3E6;
+  --focus: #05607A;
+  --focus-halo: #FFFBF0;
+  --font-display: Unbounded, Outfit, system-ui, sans-serif;
+  --font-sans: Outfit, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+  --radius-glass: 3px;
+  --radius-sm: 6px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+  --shadow-float: 0 20px 40px rgba(140, 30, 0, .28);
+  --shadow-glass: 0 24px 48px rgba(31, 20, 9, .22);
+  --blur-glass: 20px;
+  --trame-pitch: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #1A120B;
+    --surface-raised: #241910;
+    --hairline: #3A2C1F;
+    --ink: #FFF4DC;
+    --ink-soft: #E9D9BE;
+    --muted: #B5A28A;
+    --label-fire: #FF8A66;
+    --sky-soft: #0E3E4C;
+    --on-sky-soft: #9BE7FF;
+    --focus: #9BE7FF;
+    --focus-halo: #1A120B;
+  }
+}
