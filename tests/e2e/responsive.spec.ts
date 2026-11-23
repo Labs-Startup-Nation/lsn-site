@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { PAGES } from './paths';
 
-const URLS = [...PAGES, '/tech-watch/2026-10-26', '/tech-watch/2026-01-05'];
+const URLS = [...PAGES, '/tech-watch/2026-10-26', '/tech-watch/2026-01-05', '/tech-watch/2026-01-12'];
 
 for (const width of [320, 375, 768]) {
   test(`no horizontal scroll at ${width}px`, async ({ page }) => {

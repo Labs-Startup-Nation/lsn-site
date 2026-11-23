@@ -18,3 +18,11 @@ export function formatIssueDate(date: string, style: 'short' | 'long', lang: Lan
     timeZone: 'UTC', day: 'numeric', month: style === 'long' ? 'long' : 'short', year: 'numeric',
   }).format(new Date(`${date}T00:00:00Z`));
 }
+
+/** Fails the build when an issue links to a PDF carousel that is not in public/. */
+export function checkPdf(entry: IssueEntry, exists: (path: string) => boolean): void {
+  const pdf = entry.data.pdf;
+  if (pdf && !exists(`public${pdf}`)) {
+    throw new Error(`Issue "${entry.id}" links to ${pdf} but public${pdf} does not exist`);
+  }
+}

@@ -2,7 +2,7 @@
   "date": "2026-01-12",
   "week": 3,
   "title": "A fixture issue with a PDF carousel",
-  "oneLine": "Only the required parts of an issue, to check that empty parts are hidden.",
+  "oneLine": "One line with https://github.com/averyveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegment",
   "topStories": [
     {
       "label": "Test",
@@ -32,7 +32,8 @@
             }
           ]
         }
-      ]
+      ],
+      "note": "Read more at https://github.com/averyveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegment"
     },
     {
       "id": "jobs",
@@ -41,22 +42,34 @@
       "articles": []
     }
   ],
-  "agenda": [],
+  "agenda": [
+    {
+      "date": "20 Jan.",
+      "title": "Event",
+      "url": "https://example.org/e",
+      "text": "Details at https://github.com/averyveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegment"
+    }
+  ],
   "concept": {
     "name": "Test concept",
     "whatItIs": "A thing.",
     "thinkOfIt": "Like another thing.",
     "seenThisWeek": "In the tests.",
-    "inPractice": "Nothing."
+    "inPractice": "See https://github.com/averyveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegment"
   },
   "number": {
     "value": "1",
-    "text": "One number.",
+    "text": "Source page https://github.com/averyveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegment",
     "source": {
       "name": "Example",
       "url": "https://example.org/n"
     }
   },
-  "terms": [],
+  "terms": [
+    {
+      "term": "Token",
+      "definition": "See https://github.com/averyveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegmentaveryveryverylongrepositorypathsegment"
+    }
+  ],
   "pdf": "/pdf/2026-01-12.pdf"
 }

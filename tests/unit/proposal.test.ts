@@ -80,3 +80,14 @@ describe('submitProposal', () => {
     expect(await submitProposal(row, { url: '', anonKey: '' })).toEqual({ ok: false, message: 'Form is not configured' });
   });
 });
+
+describe('submitProposal timeout', () => {
+  test('a stalled request gives up and reports it', async () => {
+    const row = { name: 'Ada', email: 'a@b.co', organisation: null, kind: 'app', problem: 'P', first_version: null, timing: 'none', consent: true } as const;
+    const stalled = (_url: string, init: RequestInit) => new Promise<Response>((_, reject) => {
+      init.signal?.addEventListener('abort', () => reject(new DOMException('The operation timed out.', 'TimeoutError')));
+    });
+    const r = await submitProposal(row, { url: 'https://x.supabase.co', anonKey: 'k' }, stalled as typeof fetch, 50);
+    expect(r).toEqual({ ok: false, message: 'Timeout' });
+  });
+});

@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/",
-      "has": [{ "type": "header", "key": "accept-language", "value": "(?i)^fr.*" }],
+      "has": [{ "type": "header", "key": "accept-language", "value": "^[fF][rR]([-_;,].*)?$" }],
       "destination": "/fr/",
       "permanent": false
     },

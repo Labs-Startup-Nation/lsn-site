@@ -27,3 +27,17 @@ describe('formatIssueDate', () => {
     expect(formatIssueDate('2026-10-26', 'short', 'fr')).toBe('26 oct. 2026');
   });
 });
+
+import { checkPdf } from '../../src/lib/issue-utils';
+
+describe('checkPdf', () => {
+  test('passes when the issue has no pdf or the file exists', () => {
+    expect(() => checkPdf(entry('2026-10-26'), () => false)).not.toThrow();
+    const withPdf = { id: '2026-11-02', data: { ...base, date: '2026-11-02', pdf: '/pdf/2026-11-02.pdf' } };
+    expect(() => checkPdf(withPdf, (p) => p === 'public/pdf/2026-11-02.pdf')).not.toThrow();
+  });
+  test('fails the build when the pdf file is missing', () => {
+    const withPdf = { id: '2026-11-02', data: { ...base, date: '2026-11-02', pdf: '/pdf/2026-11-02.pdf' } };
+    expect(() => checkPdf(withPdf, () => false)).toThrow('Issue "2026-11-02" links to /pdf/2026-11-02.pdf but public/pdf/2026-11-02.pdf does not exist');
+  });
+});

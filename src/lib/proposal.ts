@@ -55,7 +55,7 @@ export interface SupabaseConfig { url: string; anonKey: string }
  * anonymous visitors may insert but never select. Never throws.
  */
 export async function submitProposal(
-  row: ProposalRow, cfg: SupabaseConfig, fetchFn: typeof fetch = fetch,
+  row: ProposalRow, cfg: SupabaseConfig, fetchFn: typeof fetch = fetch, timeoutMs = 15_000,
 ): Promise<{ ok: true } | { ok: false; message: string }> {
   if (!cfg.url || !cfg.anonKey) return { ok: false, message: 'Form is not configured' };
   try {
@@ -68,9 +68,11 @@ export async function submitProposal(
         Prefer: 'return=minimal',
       },
       body: JSON.stringify(row),
+      signal: AbortSignal.timeout(timeoutMs),
     });
     return res.ok ? { ok: true } : { ok: false, message: `HTTP ${res.status}` };
   } catch (e) {
+    if (e instanceof DOMException && (e.name === 'TimeoutError' || e.name === 'AbortError')) return { ok: false, message: 'Timeout' };
     return { ok: false, message: e instanceof Error ? e.message : String(e) };
   }
 }
