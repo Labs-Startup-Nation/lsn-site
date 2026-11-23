@@ -1,0 +1,15 @@
+---
+interface Props { accent?: 'ember' | 'tangerine' | 'sky' | 'salmon'; level?: 2 | 3; id?: string; class?: string }
+const { accent = 'ember', level = 2, id, class: className } = Astro.props;
+const H = `h${level}` as 'h2' | 'h3';
+---
+<div class:list={['sec', className]} style={`--d: var(--${accent})`}>
+  <i aria-hidden="true"></i>
+  <H id={id}><slot /></H>
+</div>
+
+<style is:global>
+  .sec { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; min-width: 0; }
+  .sec i { width: 12px; height: 12px; flex: none; background: var(--d, var(--ember)); box-shadow: 16px 0 0 var(--sun-soft), 32px 0 0 var(--sky); margin-right: 32px; }
+  .sec h2, .sec h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(22px, 3.4vw, 32px); line-height: 1.12; letter-spacing: -.025em; min-width: 0; overflow-wrap: anywhere; }
+</style>

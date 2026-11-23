@@ -56,3 +56,10 @@ test('404 page links home', async ({ page }) => {
   expect(res?.status()).toBe(404);
   await expect(page.getByRole('link', { name: /home page|accueil/i }).first()).toBeVisible();
 });
+
+test('header logo keeps its three brand squares', async ({ page }) => {
+  await page.goto('/en/');
+  const rects = page.locator('header .logo svg rect');
+  await expect(rects).toHaveCount(3);
+  for (const r of await rects.all()) expect((await r.boundingBox())!.width).toBeGreaterThan(2);
+});

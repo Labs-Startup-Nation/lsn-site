@@ -1,0 +1,22 @@
+---
+interface Props { as?: string; class?: string; [key: string]: unknown }
+const { as: Tag = 'div', class: className, ...rest } = Astro.props;
+---
+<Tag class:list={['smoke', className]} {...rest}><slot /></Tag>
+
+<style is:global>
+  .smoke {
+    background: var(--smoke) radial-gradient(var(--smoke-grain) 1px, transparent 1.3px) 0 0 / var(--trame-pitch) var(--trame-pitch);
+    -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.7);
+    backdrop-filter: blur(var(--blur-glass)) saturate(1.7);
+    border: 1px solid var(--smoke-line);
+    border-radius: var(--radius-glass);
+    color: var(--smoke-ink);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .smoke { background: var(--smoke-opaque); }
+  }
+  @media print { .smoke { background: var(--smoke-opaque); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+  .st { color: var(--smoke-ink-soft); }
+  .smoke a { color: var(--smoke-ink); }
+</style>

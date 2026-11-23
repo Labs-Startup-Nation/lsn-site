@@ -1,0 +1,24 @@
+---
+interface Props { href?: string; variant: 'sun' | 'sky' | 'ink' | 'ghost'; type?: 'button' | 'submit'; class?: string; [key: string]: unknown }
+const { href, variant, type = 'button', class: className, ...rest } = Astro.props;
+const classes = ['btn', variant, className];
+---
+{href
+  ? <a href={href} class:list={classes} {...rest}><slot /></a>
+  : <button type={type} class:list={classes} {...rest}><slot /></button>}
+
+<style is:global>
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; text-align: center; min-height: 44px; padding: 10px 20px;
+    border-radius: var(--radius-glass); border: 1px solid transparent; font-family: var(--font-sans); font-weight: 600;
+    font-size: 14px; line-height: 1.2; text-decoration: none; cursor: pointer; transition: transform .12s ease, filter .12s ease;
+  }
+  .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+  .btn:disabled { cursor: progress; opacity: .7; transform: none; }
+  .btn.sun { background: var(--sun); color: var(--on-bright); }
+  .btn.sky { background: var(--sky); color: var(--on-bright); }
+  .btn.ink { background: var(--ink); color: var(--surface); }
+  .btn.ghost { background: transparent; color: inherit; border-color: currentColor; font-weight: 500; }
+  .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+</style>

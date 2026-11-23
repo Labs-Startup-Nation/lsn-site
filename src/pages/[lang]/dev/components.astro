@@ -1,0 +1,53 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Beam from '../../../components/Beam.astro';
+import Smoke from '../../../components/Smoke.astro';
+import Label from '../../../components/Label.astro';
+import Button from '../../../components/Button.astro';
+import SectionTitle from '../../../components/SectionTitle.astro';
+import Logo from '../../../components/Logo.astro';
+import { langStaticPaths, type Lang } from '../../../i18n/lang';
+
+export const getStaticPaths = langStaticPaths;
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang} title="Components">
+  <meta slot="head" name="robots" content="noindex" />
+  <div class="demo">
+    <Beam interactive class="hero-demo">
+      <Smoke class="panel">
+        <Label>Interactive beam</Label>
+        <h1>Move the pointer over this beam.</h1>
+        <p class="st">The ramp glides slightly toward the pointer. Cards below do not react.</p>
+        <div class="btns"><Button href="#" variant="sun">Sun</Button><Button href="#" variant="ghost">Ghost</Button></div>
+      </Smoke>
+    </Beam>
+
+    <SectionTitle>Section title (ember)</SectionTitle>
+    <SectionTitle accent="tangerine">Tangerine</SectionTitle>
+    <SectionTitle accent="sky">Sky</SectionTitle>
+    <SectionTitle accent="salmon">Salmon</SectionTitle>
+
+    <div class="row">
+      <Beam shift={-0.06} as="article" class="card-demo"><Smoke class="box"><Label>Static card</Label><p class="st">Animated, no pointer effect.</p></Smoke></Beam>
+      <Beam shift={0.14} as="article" class="card-demo"><Smoke class="box"><Label>Sun label in smoke</Label><p class="st">Labels in smoke are always sun.</p></Smoke></Beam>
+    </div>
+
+    <div class="btns">
+      <Button variant="sun">Sun</Button><Button variant="sky">Sky</Button><Button variant="ink">Ink</Button><Button variant="ghost">Ghost</Button><Button variant="ink" disabled>Disabled</Button>
+    </div>
+    <p><Label as="span">Fire</Label> · <Label as="span" tone="ink">Ink</Label></p>
+    <div class="logos"><Logo /><Logo full /></div>
+  </div>
+</Base>
+
+<style>
+  .demo { display: flex; flex-direction: column; gap: 32px; }
+  :global(.hero-demo) > :global(.bc) { min-height: 360px; display: flex; align-items: flex-end; padding: 20px; }
+  :global(.panel) { padding: 28px; display: flex; flex-direction: column; gap: 14px; max-width: 640px; }
+  h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(28px, 5vw, 48px); line-height: 1.05; letter-spacing: -.035em; }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  :global(.card-demo) > :global(.bc) { padding: 14px; padding-top: 110px; }
+  :global(.box) { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .logos { display: flex; gap: 32px; align-items: center; height: 48px; }
+</style>
