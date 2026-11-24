@@ -14,4 +14,5 @@ test('only Vercel builds are blocked', () => {
   expect(() => assertDeployEnv({ VERCEL: '1', SITE_URL: 'https://lsn.example' })).toThrow(
     'Missing environment variables on Vercel: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY',
   );
+  expect(() => assertDeployEnv({ VERCEL: '1' })).toThrow(/Vercel → Settings → Environment Variables, for both Production and Preview/);
 });

@@ -8,5 +8,10 @@ export function missingDeployEnv(env) {
 export function assertDeployEnv(env) {
   if (!env.VERCEL) return;
   const missing = missingDeployEnv(env);
-  if (missing.length) throw new Error(`Missing environment variables on Vercel: ${missing.join(', ')}`);
+  if (missing.length) {
+    throw new Error(
+      `Missing environment variables on Vercel: ${missing.join(', ')}. ` +
+        'Add them in Vercel → Settings → Environment Variables, for both Production and Preview, then redeploy.',
+    );
+  }
 }

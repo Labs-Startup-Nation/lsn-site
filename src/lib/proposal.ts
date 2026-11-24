@@ -58,6 +58,9 @@ export async function submitProposal(
   row: ProposalRow, cfg: SupabaseConfig, fetchFn: typeof fetch = fetch, timeoutMs = 15_000,
 ): Promise<{ ok: true } | { ok: false; message: string }> {
   if (!cfg.url || !cfg.anonKey) return { ok: false, message: 'Form is not configured' };
+  // AbortController + setTimeout rather than AbortSignal.timeout, which Safari < 16 lacks.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetchFn(`${cfg.url.replace(/\/$/, '')}/rest/v1/proposals`, {
       method: 'POST',
@@ -68,11 +71,13 @@ export async function submitProposal(
         Prefer: 'return=minimal',
       },
       body: JSON.stringify(row),
-      signal: AbortSignal.timeout(timeoutMs),
+      signal: controller.signal,
     });
     return res.ok ? { ok: true } : { ok: false, message: `HTTP ${res.status}` };
   } catch (e) {
     if (e instanceof DOMException && (e.name === 'TimeoutError' || e.name === 'AbortError')) return { ok: false, message: 'Timeout' };
     return { ok: false, message: e instanceof Error ? e.message : String(e) };
+  } finally {
+    clearTimeout(timer);
   }
 }

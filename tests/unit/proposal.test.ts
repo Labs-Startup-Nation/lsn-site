@@ -91,3 +91,18 @@ describe('submitProposal timeout', () => {
     expect(r).toEqual({ ok: false, message: 'Timeout' });
   });
 });
+
+describe('submitProposal on older browsers', () => {
+  test('still sends when AbortSignal.timeout does not exist (Safari < 16)', async () => {
+    const original = AbortSignal.timeout;
+    // @ts-expect-error simulating an older browser
+    AbortSignal.timeout = undefined;
+    try {
+      const row = { name: 'Ada', email: 'a@b.co', organisation: null, kind: 'app', problem: 'P', first_version: null, timing: 'none', consent: true } as const;
+      const ok = async () => new Response(null, { status: 201 });
+      expect(await submitProposal(row, { url: 'https://x.supabase.co', anonKey: 'k' }, ok as unknown as typeof fetch)).toEqual({ ok: true });
+    } finally {
+      AbortSignal.timeout = original;
+    }
+  });
+});

@@ -16,3 +16,16 @@ for (const width of [320, 375, 768]) {
     }
   });
 }
+
+for (const width of [320, 375]) {
+  test(`hackathon facts stay on one line at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    for (const lang of ['en', 'fr']) {
+      await page.goto(`/${lang}/projects`);
+      const lines = await page.locator('.fact strong').evaluateAll((els) =>
+        els.map((el) => [el.textContent, Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight))]),
+      );
+      for (const [text, n] of lines) expect(n, `${lang} "${text}"`).toBe(1);
+    }
+  });
+}
