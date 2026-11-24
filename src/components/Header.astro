@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import LangSwitch from './LangSwitch.astro';
+import Button from './Button.astro';
 import { NAV, isCurrent } from '../lib/nav';
 import { localePath, type Lang } from '../i18n/lang';
 import { t } from '../i18n/ui';
@@ -17,6 +18,7 @@ const pathname = Astro.url.pathname;
         <a href={localePath(lang, item.path)} aria-current={isCurrent(pathname, item.path) ? 'page' : undefined}>{t(lang, item.key)}</a>
       ))}
     </nav>
+    <Button href={localePath(lang, '/propose')} variant="ink" class="top-cta">{t(lang, 'nav.propose')}</Button>
     <LangSwitch lang={lang} />
   </div>
 </header>
@@ -37,5 +39,7 @@ const pathname = Astro.url.pathname;
     padding: 8px 12px; border-radius: var(--radius-glass); color: var(--ink-soft);
   }
   .nav a:hover { background: var(--surface-raised); color: var(--ink); }
+  .top :global(.top-cta) { flex: none; white-space: nowrap; }
+  @media (max-width: 900px) { .top :global(.top-cta) { display: none; } }
   .nav a[aria-current='page'] { color: var(--ink); background: var(--surface-raised); box-shadow: inset 0 -2px 0 var(--ember); }
 </style>

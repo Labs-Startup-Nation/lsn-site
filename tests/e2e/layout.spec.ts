@@ -69,3 +69,22 @@ test('no analytics script and no cookie outside Vercel', async ({ page, context 
   await expect(page.locator('script[src*="_vercel"], script[data-sdkn]')).toHaveCount(0);
   expect(await context.cookies()).toEqual([]);
 });
+
+test('header has a "Propose a project" button next to the language switch', async ({ page }) => {
+  await page.goto('/en/about');
+  const cta = page.locator('header .top-cta');
+  await expect(cta).toBeVisible();
+  await expect(cta).toHaveText('Propose a project');
+  await expect(cta).toHaveAttribute('href', '/en/propose');
+  // Sits right before the EN/FR switch.
+  expect(await cta.evaluate((el) => el.nextElementSibling?.classList.contains('lang'))).toBe(true);
+  await page.goto('/fr/');
+  await expect(page.locator('header .top-cta')).toHaveText('Proposer un projet');
+  await expect(page.locator('header .top-cta')).toHaveAttribute('href', '/fr/propose');
+});
+
+test('header button is hidden on small screens, where the nav already has the link', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/en/');
+  await expect(page.locator('header .top-cta')).toBeHidden();
+});
